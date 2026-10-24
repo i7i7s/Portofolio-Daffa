@@ -4,14 +4,14 @@ Sumber implementasi berada di folder ini, berdampingan dengan PRD dan aset asli.
 
 ## Menjalankan lokal
 
-Gunakan Node.js 22 LTS atau versi stabil yang memenuhi persyaratan Next.js, lalu dari folder ini:
+Repositori ini monorepo. Website portofolio ada di `apps/portfolio`, website fotografi di `apps/photography`. Gunakan Node.js 22 LTS, lalu dari **folder utama repositori**:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Buka **http://127.0.0.1:3000/id/** atau **http://127.0.0.1:3000/en/**. `/` dialihkan ke `/id/`. `npm ci` menggunakan versi yang tersimpan dalam `package-lock.json`.
+Buka **http://127.0.0.1:3000/id/** atau **http://127.0.0.1:3000/en/**. `/` dialihkan ke `/id/`. `npm ci` memasang dependensi kedua website sekaligus dari `package-lock.json` di folder utama. Perintah `npm run …` lain di panduan ini dijalankan dari folder `apps/portfolio`.
 
 Mode development menampilkan tiga proyek dan empat ilustrasi galeri contoh yang berstatus **draft**. Banner lokal dan label pada setiap media membedakan contoh dari karya pribadi. Ilustrasi antarmuka dan lanskap contoh dibuat khusus untuk menguji tata letak; gambar referensi Potozon tidak digunakan sebagai konten website.
 
@@ -169,7 +169,7 @@ Pada development, `window.__portfolioMotion()` menyediakan jumlah trigger/tween 
 1. Isi nama, bio dua bahasa, email, dan `siteUrl`. Pastikan semua proyek/foto yang ingin tampil berstatus `published`, `sample: false`, dan memiliki konten dua bahasa.
 2. Jalankan `npm run build:release`. Perintah ini sengaja gagal selama identitas, email, atau domain belum diisi. Build lokal biasa tetap bisa dilakukan sebelum itu.
 3. Simpan sumber ke repositori Git pilihan Anda; abaikan `node_modules`, `.next`, log, dan berkas environment lokal. Paket ini belum membuat repositori atau mendorong perubahan ke layanan luar.
-4. Pada Vercel, impor repositori dan pilih preset **Next.js**. Install command: `npm ci`. Build command: **`npm run build:release`**. Pilih Node 22 atau versi LTS kompatibel. Output directory biarkan default.
+4. Pada Vercel, impor repositori, isi **Root Directory** dengan `apps/portfolio`, dan pilih preset **Next.js**. Install command: `npm ci`. Build command: **`npm run build:release`**. Pilih Node 22 atau versi LTS kompatibel. Output directory biarkan default.
 5. Hapus `CONTENT_PREVIEW` atau set `false` pada lingkungan publik. Isi `siteUrl` dengan domain deployment sebelum build final agar canonical, alternate language, dan sitemap benar.
 6. Tinjau deployment preview, lalu promosikan ke produksi saat Anda siap. Perubahan JSON/MDX/aset memerlukan commit dan build/deployment baru; menyimpan file lokal tidak mengubah website publik.
 

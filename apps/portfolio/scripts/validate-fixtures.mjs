@@ -2,6 +2,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 const root = process.cwd();
 const temp = mkdtempSync(path.join(tmpdir(), "portfolio-validation-"));
@@ -40,7 +41,7 @@ const run = () => {
       output: execFileSync(
         process.execPath,
         [
-          path.join(root, "node_modules/tsx/dist/cli.mjs"),
+          fileURLToPath(import.meta.resolve("tsx/cli")),
           path.join(root, "scripts/validate-content.ts"),
         ],
         { cwd: temp, encoding: "utf8", stdio: "pipe" },

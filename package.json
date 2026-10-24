@@ -1,48 +1,18 @@
 {
-  "name": "creative-portfolio",
+  "name": "daffa-sites",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "next dev --hostname 127.0.0.1",
-    "build": "tsx scripts/validate-content.ts && next build",
-    "build:preview": "cross-env CONTENT_PREVIEW=true npm run build",
-    "build:release": "tsx scripts/validate-content.ts --release && cross-env CONTENT_PREVIEW=false next build",
-    "start": "next start --hostname 127.0.0.1",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint .",
-    "validate": "tsx scripts/validate-content.ts",
-    "test:e2e": "playwright test",
-    "start:preview": "cross-env CONTENT_PREVIEW=true next start --hostname 127.0.0.1",
-    "test:content": "node scripts/validate-fixtures.mjs"
-  },
-  "dependencies": {
-    "@gsap/react": "^2.1.2",
-    "gsap": "^3.15.0",
-    "lenis": "^1.3.27",
-    "next": "^16.4.3",
-    "next-intl": "^4.14.9",
-    "next-mdx-remote": "^6.0.0",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1",
-    "zod": "^4.6.7"
-  },
-  "devDependencies": {
-    "@axe-core/playwright": "^4.14.0",
-    "@fontsource-variable/manrope": "^5.3.0",
-    "@playwright/test": "^1.64.1",
-    "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^26.6.5",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "cross-env": "^10.1.0",
-    "eslint": "^9.39.5",
-    "eslint-config-next": "^16.4.3",
-    "lighthouse": "^13.5.0",
-    "postcss": "^8.5.31",
-    "prettier": "^3.9.10",
-    "tailwindcss": "^4.3.3",
-    "tsx": "^4.23.15",
-    "typescript": "^6.0.3"
-  },
-  "type": "module"
+    "dev": "npm run dev -w @daffa/portfolio",
+    "dev:photo": "npm run dev -w @daffa/photography",
+    "build": "npm run build --workspaces",
+    "build:portfolio": "npm run build -w @daffa/portfolio",
+    "build:photo": "npm run build -w @daffa/photography",
+    "lint": "npm run lint --workspaces",
+    "typecheck": "npm run typecheck --workspaces"
+  }
 }

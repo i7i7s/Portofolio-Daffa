@@ -1,39 +1,38 @@
-# Portofolio Kreatif
+# Daffa — portofolio & arsip foto
 
-Website portofolio mahasiswa Sistem Informasi dengan tampilan editorial, dua bahasa (ID/EN), animasi GSAP, dan galeri fotografi.
+Monorepo dengan dua website Next.js yang dideploy terpisah dari repositori yang sama.
 
-![Pratinjau desktop](qa/desktop-hero.png)
+| Website | Folder | Dev lokal | Panduan |
+| --- | --- | --- | --- |
+| Portofolio kreatif (ID/EN, GSAP) | `apps/portfolio` | `npm run dev` → http://127.0.0.1:3000/id/ | [apps/portfolio/README.md](apps/portfolio/README.md) |
+| Arsip Cahaya, website fotografi | `apps/photography` | `npm run dev:photo` → http://127.0.0.1:3002/ | [apps/photography/README.md](apps/photography/README.md) |
 
-## Menjalankan lokal
+![Pratinjau portofolio](apps/portfolio/qa/desktop-hero.png)
 
-Gunakan Node.js 22 LTS, lalu jalankan:
+## Menjalankan
+
+Gunakan Node.js 22 LTS. Dari folder ini:
 
 ```sh
-npm ci
-npm run dev
+npm ci            # memasang dependensi kedua website (npm workspaces)
+npm run dev       # portofolio
+npm run dev:photo # website fotografi
 ```
 
-Buka [http://127.0.0.1:3000/id/](http://127.0.0.1:3000/id/). Mode development menampilkan konten contoh berstatus draft. Identitas awal tetap `[Nama Kamu]`.
-
-## Panduan
-
-- [Menjalankan, mengisi konten, dan deployment Vercel](README-WEBSITE.md)
-- [Hasil pengujian dan batasan](QA-REPORT.md)
-- [PRD](PRD-Portofolio-Kreatif.md)
-- [Screenshot HP](qa/mobile.png)
-
-Konten dapat diedit melalui `content/` dan `messages/`. Mode publik menyembunyikan draft dan contoh. Build rilis memeriksa kelengkapan identitas, kontak, dan domain.
-
-## Stack dan pemeriksaan
-
-Next.js App Router, React, TypeScript, Tailwind CSS, next-intl, GSAP (ScrollTrigger, SplitText, Flip), Lenis, JSON/MDX lokal, Zod, dan Playwright.
+Pemeriksaan untuk kedua website sekaligus:
 
 ```sh
-npm run validate
-npm run test:content
 npm run typecheck
 npm run lint
-npm run build:preview
+npm run build
 ```
 
-Dengan server lokal berjalan, jalankan `npm run test:e2e`. Lihat panduan untuk pengaturan Chrome, mode produksi, dan cara menambahkan proyek/foto.
+## Deployment
+
+Di Vercel, buat dua project dari repositori ini. Isi **Root Directory** dengan `apps/portfolio` untuk project pertama dan `apps/photography` untuk project kedua. Vercel memasang dependensi dari `package-lock.json` di folder utama secara otomatis. Detail build portofolio (termasuk `build:release`) ada di panduannya.
+
+## Dokumen lain
+
+- [PRD](PRD-Portofolio-Kreatif.md)
+- [Master prompt](MASTER-PROMPT.md)
+- [Hasil pengujian portofolio](apps/portfolio/QA-REPORT.md)

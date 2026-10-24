@@ -4,7 +4,7 @@ import { getLocale } from "next-intl/server";
 import { MotionRoot } from "@/components/motion";
 import "./globals.css";
 const manrope = localFont({
-  src: "../../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2",
+  src: "../fonts/manrope-latin-wght-normal.woff2",
   variable: "--font-manrope",
   display: "swap",
 });
