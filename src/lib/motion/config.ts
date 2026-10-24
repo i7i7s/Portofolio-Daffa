@@ -1,0 +1,17 @@
+export const motion = {
+  ease: "power3.out",
+  intro: 0.65,
+  stagger: 0.08,
+  reveal: 0.45,
+  hover: 0.22,
+  flip: 0.26,
+  wipe: 0.25,
+  language: 0.16,
+  pose: 0.2,
+  frame: 0.45,
+  gallery: 0.26,
+  photo: 0.16,
+  distance: 32,
+  mobileDistance: 14,
+  parallax: 22,
+};

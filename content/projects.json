@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "ruang",
+    "categories": ["web", "uiux"],
+    "status": "draft",
+    "sample": true,
+    "order": 1,
+    "featured": true,
+    "title": {
+      "id": "Ruang — antarmuka web",
+      "en": "Ruang — web interface"
+    },
+    "summary": {
+      "id": "Eksplorasi struktur halaman dan antarmuka web yang tenang.",
+      "en": "Exploring page structure and a calm web interface."
+    },
+    "cover": "/images/projects/ruang.svg",
+    "alt": {
+      "id": "Ilustrasi antarmuka contoh ruang; bukan karya pribadi",
+      "en": "Sample ruang interface illustration; not personal work"
+    },
+    "tools": [],
+    "links": {},
+    "media": []
+  },
+  {
+    "slug": "saku",
+    "categories": ["uiux", "mobile"],
+    "status": "draft",
+    "sample": true,
+    "order": 2,
+    "featured": true,
+    "title": {
+      "id": "Saku — alur aplikasi",
+      "en": "Saku — app flow"
+    },
+    "summary": {
+      "id": "Studi alur sederhana untuk layar kecil.",
+      "en": "A simple flow study for small screens."
+    },
+    "cover": "/images/projects/saku.svg",
+    "alt": {
+      "id": "Ilustrasi antarmuka contoh saku; bukan karya pribadi",
+      "en": "Sample saku interface illustration; not personal work"
+    },
+    "tools": [],
+    "links": {},
+    "media": []
+  },
+  {
+    "slug": "pola",
+    "categories": ["data"],
+    "status": "draft",
+    "sample": true,
+    "order": 3,
+    "featured": true,
+    "title": {
+      "id": "Pola — cerita dalam data",
+      "en": "Pola — stories in data"
+    },
+    "summary": {
+      "id": "Contoh penyajian grafik dengan konteks yang mudah dibaca.",
+      "en": "A sample chart presentation with readable context."
+    },
+    "cover": "/images/projects/pola.svg",
+    "alt": {
+      "id": "Ilustrasi antarmuka contoh pola; bukan karya pribadi",
+      "en": "Sample pola interface illustration; not personal work"
+    },
+    "tools": [],
+    "links": {},
+    "media": []
+  }
+]

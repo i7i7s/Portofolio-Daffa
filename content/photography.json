@@ -1,0 +1,74 @@
+[
+  {
+    "id": "light",
+    "status": "draft",
+    "sample": true,
+    "order": 1,
+    "featured": true,
+    "src": "/images/photography/light.svg",
+    "width": 1000,
+    "height": 1200,
+    "alt": {
+      "id": "Ilustrasi geometris contoh: cahaya & bidang",
+      "en": "Sample geometric illustration: light & planes"
+    },
+    "caption": {
+      "id": "Cahaya & bidang",
+      "en": "Light & planes"
+    }
+  },
+  {
+    "id": "quiet",
+    "status": "draft",
+    "sample": true,
+    "order": 2,
+    "featured": true,
+    "src": "/images/photography/quiet.svg",
+    "width": 1000,
+    "height": 1200,
+    "alt": {
+      "id": "Ilustrasi geometris contoh: jeda di tepian",
+      "en": "Sample geometric illustration: a quiet edge"
+    },
+    "caption": {
+      "id": "Jeda di tepian",
+      "en": "A quiet edge"
+    }
+  },
+  {
+    "id": "shape",
+    "status": "draft",
+    "sample": true,
+    "order": 3,
+    "featured": true,
+    "src": "/images/photography/shape.svg",
+    "width": 1000,
+    "height": 1200,
+    "alt": {
+      "id": "Ilustrasi geometris contoh: percakapan bentuk",
+      "en": "Sample geometric illustration: shapes in conversation"
+    },
+    "caption": {
+      "id": "Percakapan bentuk",
+      "en": "Shapes in conversation"
+    }
+  },
+  {
+    "id": "blue",
+    "status": "draft",
+    "sample": true,
+    "order": 4,
+    "featured": true,
+    "src": "/images/photography/blue.svg",
+    "width": 1000,
+    "height": 1200,
+    "alt": {
+      "id": "Ilustrasi geometris contoh: setelah biru",
+      "en": "Sample geometric illustration: after the blue"
+    },
+    "caption": {
+      "id": "Setelah biru",
+      "en": "After the blue"
+    }
+  }
+]
