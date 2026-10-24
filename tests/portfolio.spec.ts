@@ -149,7 +149,6 @@ test("gallery keyboard, touch controls, focus trap and restoration", async ({
   await trigger.click();
   const dialog = page.locator(".photo-dialog");
   await expect(dialog).toBeVisible();
-  await expect(dialog.locator("[data-pose=reviewing] img")).toBeVisible();
   await expect(dialog.locator(".photo-controls")).toContainText(
     "Gambar 1 dari 4",
   );
@@ -180,41 +179,33 @@ test("gallery keyboard, touch controls, focus trap and restoration", async ({
   await expect(trigger).toBeFocused();
 });
 
-test("interests, all mascot poses and clipboard success", async ({
+test("interests, motion extras and clipboard success", async ({
   page,
   context,
 }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.goto("/id/");
-  await expect(page.locator(".hero [data-pose=hello] img")).toBeVisible();
+  await expect(page.locator("[data-pose], .mascot")).toHaveCount(0);
+  await expect(page.locator(".hero .rotator .sr-only")).toHaveText(
+    "Web, UI/UX, Data, Mobile",
+  );
+  await expect(page.locator(".hero-stack img")).toHaveCount(3);
+  await expect(page.locator(".marquee")).toHaveCount(3);
   await page.getByRole("tab", { name: /Data/ }).click();
   await expect(page.locator("#interest-panel")).toContainText("Membaca pola");
   await expect(page.locator(".interest-frame")).toHaveClass(/data/);
-  await expect(
-    page.locator(".interest-mascot[data-pose=coding] img"),
-  ).toBeVisible();
   await page.getByRole("tab", { name: /Mobile/ }).click();
   await expect(page.locator(".interest-frame")).toHaveClass(/mobile/);
-  await page.locator(".photo-mascot").scrollIntoViewIfNeeded();
-  await expect(
-    page.locator(".photo-mascot[data-pose=shooting] img"),
-  ).toBeVisible();
   await page.locator(".preview-contact summary").click();
   await page.getByRole("button", { name: "Salin email" }).click();
   await expect(page.getByRole("status")).toHaveText("Email disalin!");
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
     "hello@example.com",
   );
-  await expect(page.locator(".contact-mascot")).toHaveAttribute(
-    "data-pose",
-    "success",
-  );
-  await expect(page.locator(".contact-mascot .mascot-current")).toBeVisible();
-  await expect(page.locator(".contact-mascot")).toHaveAttribute(
-    "data-pose",
-    "hello",
-    { timeout: 7000 },
-  );
+  await expect(page.locator(".contact-badge")).toHaveClass(/is-happy/);
+  await expect(page.locator(".contact-badge")).not.toHaveClass(/is-happy/, {
+    timeout: 7000,
+  });
 });
 
 test("locale keeps anchor, menu focus and reduced-motion contract", async ({

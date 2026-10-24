@@ -22,7 +22,6 @@ for (const p of [
   "content/photography.json",
   "messages/id.json",
   "messages/en.json",
-  "public/images/character/manifest.json",
 ])
   write(p, read(p));
 for (const p of original) {
@@ -34,8 +33,6 @@ for (const p of original) {
     );
 }
 for (const p of photos) write("public" + p.src, "fixture");
-for (const p of read("public/images/character/manifest.json").poses)
-  write("public/images/character/" + p.file, "fixture");
 const run = () => {
   try {
     return {

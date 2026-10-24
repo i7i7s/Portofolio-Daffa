@@ -55,8 +55,6 @@ for (const [locale, messages] of Object.entries({ id, en }))
   for (const [key, value] of Object.entries(messages))
     if (typeof value !== "string" || !value.trim())
       errors.push(`Empty message ${locale}.${key}`);
-const manifest = read("public/images/character/manifest.json");
-for (const pose of manifest.poses) checkAsset(`/images/character/${pose.file}`);
 if (process.argv.includes("--release")) {
   if (profile.name.includes("["))
     errors.push("Release requires your real display name");
@@ -79,7 +77,7 @@ Promise.all(
 )
   .then(() =>
     console.log(
-      `Content valid: ${projects.length} projects, ${photos.length} gallery entries, 2 languages, 5 character assets, MDX syntax checked. ${process.argv.includes("--release") ? "Release readiness passed." : "Drafts are allowed; release readiness is a separate check."}`,
+      `Content valid: ${projects.length} projects, ${photos.length} gallery entries, 2 languages, MDX syntax checked. ${process.argv.includes("--release") ? "Release readiness passed." : "Drafts are allowed; release readiness is a separate check."}`,
     ),
   )
   .catch((error) => {

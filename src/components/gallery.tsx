@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import type { Locale, Photo } from "@/lib/content/schema";
 import { gsap, useGSAP, minimal } from "./motion";
 import { motion } from "@/lib/motion/config";
-import { Mascot } from "./mascot";
 export function Gallery({
   photos,
   teaser = false,
@@ -102,11 +101,16 @@ export function Gallery({
     );
   return (
     <div ref={root}>
-      <div className={`photo-grid ${teaser ? "teaser" : ""}`}>
+      <div
+        className={`photo-grid ${teaser ? "teaser" : ""}`}
+        data-fan={teaser ? "" : undefined}
+      >
         {photos.map((p, i) => (
-          <figure key={p.id} data-reveal="media">
+          <figure key={p.id} data-reveal={teaser ? undefined : "media"}>
             <button
               className="photo-button"
+              data-cursor={t("cursorOpen")}
+              data-reveal={teaser ? "media" : undefined}
               onClick={(e) => open(i, e.currentTarget)}
               aria-label={`${t("openPhoto")}: ${p.caption?.[locale] || p.alt[locale]}${p.sample ? ` — ${t("sample")}` : ""}`}
             >
@@ -203,9 +207,6 @@ export function Gallery({
             →
           </button>
         </div>
-        {index !== null && (
-          <Mascot pose="reviewing" className="dialog-mascot" priority />
-        )}
       </dialog>
     </div>
   );

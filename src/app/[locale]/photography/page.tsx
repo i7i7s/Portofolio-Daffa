@@ -4,7 +4,7 @@ import type { Locale } from "@/lib/content/schema";
 import { pageMetadata } from "@/lib/metadata";
 import { Choreography } from "@/components/motion";
 import { Gallery } from "@/components/gallery";
-import { Mascot } from "@/components/mascot";
+import { RotatingBadge } from "@/components/fx";
 export async function generateMetadata({
   params,
 }: {
@@ -34,7 +34,11 @@ export default async function Photography({
           <p className="eyebrow">03 / {t("photography")}</p>
           <div className="page-title-row photo-title">
             <h1 data-page-title>{t("photoTitle")}</h1>
-            <Mascot pose="shooting" priority />
+            <RotatingBadge
+              className="title-badge"
+              text={`${t("photography")} ✳ ${t("photography")} ✳ `}
+              center="✳"
+            />
           </div>
           <p>{t("photoIntro")}</p>
         </section>

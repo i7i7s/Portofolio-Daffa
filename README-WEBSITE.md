@@ -130,11 +130,22 @@ Galeri memperlihatkan seluruh komposisi saat dialog terbuka. Tombol, panah keybo
 - Tema serta tata letak: `src/app/globals.css`, dengan variabel `--paper`, `--surface`, `--ink`, `--muted`, `--accent`, dan `--line`.
 - Pengaturan gerak: `src/lib/motion/config.ts`.
 - Koreografi bersama: `src/components/motion.tsx`.
-- Karakter: `public/images/character/`, termasuk manifest asli. PNG tidak diubah; `next/image` membuat varian responsif ketika diperlukan.
+- Efek tambahan (preloader, kursor, progress bar, marquee, badge berputar, tombol magnetik, kata berganti): `src/components/fx.tsx`.
 
 GSAP menjadi mesin gerak tunggal. ScrollTrigger mengatur bagian halaman; SplitText membagi baris judul dan mengembalikan pembungkusnya saat cleanup; Flip menangani perubahan filter. Lenis hanya aktif pada pointer presisi dan tanpa preferensi gerak minimal, dengan satu ticker. Teks tetap berada dalam HTML awal. Browser tanpa JavaScript masih dapat membaca isi, mengikuti tautan, dan menggunakan URL filter; dialog serta clipboard memerlukan JavaScript.
 
-Maskot memakai gambar statis utuh. Ia tidak memiliki rig sendi, kedipan, atau langkah kaki. Pose berikutnya didekode sebelum pose lama diganti; wadah tetap persegi. Tidak ada animasi idle tanpa akhir. Preferensi gerak minimal sistem operasi/browser menonaktifkan Lenis, parallax, split reveal, dan perpindahan dekoratif.
+Website tidak lagi memakai karakter/maskot. Kepribadian halaman dibawa oleh tipografi dan gerak:
+
+- Preloader hitung 000→100 dengan tirai, hanya sekali per sesi. Script kecil di `src/app/layout.tsx` memutuskannya sebelum halaman tampil, jadi tidak ada kedipan.
+- Hero: nama muncul huruf per huruf di setiap kunjungan, stiker dan pita melompat masuk, kata "Sedang menjelajah" berganti otomatis, tumpukan kartu mengikuti mouse dan bergerak parallax saat scroll, badge berputar, tombol magnetik.
+- Dua pita marquee bersilang yang makin cepat dan berbalik arah mengikuti kecepatan scroll.
+- Karya pilihan di-pin dan bergeser horizontal di layar ≥1024px, dengan progress bar; kartu proyek miring 3D mengikuti mouse.
+- Judul section terbuka per huruf; judul "Tentang" menyala kata demi kata mengikuti scroll.
+- Foto teaser menyebar dari tumpukan seperti kipas, dengan teks outline besar yang bergeser di belakang.
+- Kontak: pita marquee, badge berputar, dan ledakan bintang saat email disalin.
+- Kursor custom dengan label "Lihat/Buka" (hanya mouse) dan progress bar scroll di atas layar.
+
+Preferensi gerak minimal sistem operasi/browser mematikan preloader, Lenis, kursor, marquee, scroll horizontal, parallax, split reveal, dan putaran badge; semua konten tetap tampil statis.
 
 ## Pemeriksaan
 

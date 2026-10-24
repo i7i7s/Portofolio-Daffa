@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Mascot } from "./mascot";
+import { Magnetic, RotatingBadge } from "./fx";
 import { gsap, useGSAP, minimal } from "./motion";
 export function Contact({
   email,
@@ -29,13 +29,43 @@ export function Contact({
       if (timer.current) clearTimeout(timer.current);
     };
   }, []);
+  // Squash the button and throw a handful of stars out of it.
   const bounce = contextSafe(() => {
-    if (!minimal())
-      gsap.fromTo(
-        root.current?.querySelector(".copy-button") || {},
-        { scale: 0.96 },
-        { scale: 1, duration: 0.2 },
-      );
+    if (minimal()) return;
+    const button = root.current?.querySelector(".copy-button");
+    if (!button) return;
+    gsap.fromTo(
+      button,
+      { scale: 0.85 },
+      { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.4)" },
+    );
+    const box = root.current!.getBoundingClientRect();
+    const from = button.getBoundingClientRect();
+    for (let i = 0; i < 14; i++) {
+      const star = document.createElement("span");
+      star.className = "burst-star";
+      star.textContent = "✳";
+      star.setAttribute("aria-hidden", "true");
+      root.current!.appendChild(star);
+      const angle = (i / 14) * Math.PI * 2;
+      const reach = gsap.utils.random(70, 160);
+      gsap.set(star, {
+        x: from.left - box.left + from.width / 2,
+        y: from.top - box.top + from.height / 2,
+        xPercent: -50,
+        yPercent: -50,
+        scale: gsap.utils.random(0.5, 1.3),
+      });
+      gsap.to(star, {
+        x: `+=${Math.cos(angle) * reach}`,
+        y: `+=${Math.sin(angle) * reach}`,
+        rotation: gsap.utils.random(-220, 220),
+        opacity: 0,
+        duration: gsap.utils.random(0.7, 1.1),
+        ease: "power3.out",
+        onComplete: () => star.remove(),
+      });
+    }
   });
   const copy = async () => {
     try {
@@ -58,9 +88,11 @@ export function Contact({
             <a href={`mailto:${email}`} className="email-address">
               {email} ↗
             </a>
-            <button className="copy-button" onClick={copy}>
-              {t("copy")} ⧉
-            </button>
+            <Magnetic>
+              <button className="copy-button" onClick={copy}>
+                {t("copy")} ⧉
+              </button>
+            </Magnetic>
           </div>
         ) : (
           <p className="muted">{t("contactMissing")}</p>
@@ -97,9 +129,10 @@ export function Contact({
           ))}
         </div>
       </div>
-      <Mascot
-        pose={status === "copied" ? "success" : "hello"}
-        className="contact-mascot"
+      <RotatingBadge
+        className={`contact-badge ${status === "copied" ? "is-happy" : ""}`}
+        text={`${t("contactMarquee")} ✳ ${t("contactMarquee")} ✳ `}
+        center={status === "copied" ? "✓" : "✳"}
       />
     </div>
   );
