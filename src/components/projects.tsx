@@ -3,7 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type PointerEvent,
+} from "react";
 import { flushSync } from "react-dom";
 import type { Project, Locale } from "@/lib/content/schema";
 import { gsap, useGSAP, Flip, ScrollTrigger, minimal } from "./motion";
@@ -51,9 +57,11 @@ export function ProjectCard({
     if (minimal()) return;
     gsap.to(root.current?.querySelector(".project-art") || {}, {
       rotation: on ? 0 : index % 2 ? 2 : -2,
-      scale: on ? 1.02 : 1,
-      duration: motion.hover,
-      overwrite: true,
+      scale: on ? 1.03 : 1,
+      ...(on ? {} : { rotationX: 0, rotationY: 0 }),
+      duration: on ? motion.hover : 0.6,
+      ease: on ? motion.ease : "elastic.out(1, 0.5)",
+      overwrite: "auto",
     });
     gsap.to(root.current?.querySelector(".project-arrow") || {}, {
       x: on ? 4 : 0,
@@ -62,18 +70,35 @@ export function ProjectCard({
       overwrite: true,
     });
   });
+  // Lean the artwork toward the mouse like a card held in the hand.
+  const tilt = contextSafe((e: PointerEvent) => {
+    if (minimal() || e.pointerType !== "mouse") return;
+    const art = root.current?.querySelector(".project-art");
+    if (!art) return;
+    const r = art.getBoundingClientRect();
+    gsap.to(art, {
+      rotationY: ((e.clientX - r.left) / r.width - 0.5) * 14,
+      rotationX: -((e.clientY - r.top) / r.height - 0.5) * 10,
+      transformPerspective: 900,
+      duration: 0.5,
+      ease: "power3",
+      overwrite: "auto",
+    });
+  });
   return (
     <article
       ref={root}
       className={`project-card project-${p.slug}`}
       data-flip-id={p.slug}
       onPointerEnter={() => hover(true)}
+      onPointerMove={tilt}
       onPointerLeave={() => hover(false)}
       onFocus={() => hover(true)}
       onBlur={() => hover(false)}
     >
       <Link
         className="project-link"
+        data-cursor={t("cursorView")}
         href={`/${locale}/projects/${p.slug}/${category === "all" ? "" : `?category=${category}`}`}
       >
         <div data-parallax className="project-scroll">

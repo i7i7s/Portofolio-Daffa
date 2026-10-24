@@ -3,7 +3,6 @@ import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { gsap, useGSAP, minimal } from "./motion";
 import { motion } from "@/lib/motion/config";
-import { Mascot } from "./mascot";
 const fields = ["web", "uiux", "data", "mobile"];
 export function Interests() {
   const t = useTranslations();
@@ -203,7 +202,6 @@ export function Interests() {
           </svg>
         </div>
         <p>{t(`${field}Desc`)}</p>
-        <Mascot pose="coding" className="interest-mascot" />
       </div>
     </div>
   );

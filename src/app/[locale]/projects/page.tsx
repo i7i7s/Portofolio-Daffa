@@ -5,7 +5,7 @@ import type { Locale } from "@/lib/content/schema";
 import { pageMetadata } from "@/lib/metadata";
 import { Choreography } from "@/components/motion";
 import { ProjectIndex } from "@/components/projects";
-import { Mascot } from "@/components/mascot";
+import { RotatingBadge } from "@/components/fx";
 export async function generateMetadata({
   params,
 }: {
@@ -33,7 +33,10 @@ export default async function Projects({
               {t("allProjects")}
               <span className="orange-dot">.</span>
             </h1>
-            <Mascot pose="coding" priority />
+            <RotatingBadge
+              className="title-badge"
+              text={`${t("visualIndex")} ✳ ${t("visualIndex")} ✳ `}
+            />
           </div>
           <p>{t("workIntro")}</p>
         </section>

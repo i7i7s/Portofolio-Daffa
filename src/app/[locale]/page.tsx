@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -5,7 +6,7 @@ import { profile, projects, photos, preview } from "@/lib/content";
 import type { Locale } from "@/lib/content/schema";
 import { pageMetadata } from "@/lib/metadata";
 import { Choreography } from "@/components/motion";
-import { Mascot } from "@/components/mascot";
+import { Magnetic, Marquee, RotatingBadge, WordRotator } from "@/components/fx";
 import { ProjectCard } from "@/components/projects";
 import { Interests } from "@/components/interests";
 import { Gallery } from "@/components/gallery";
@@ -29,21 +30,48 @@ export default async function Home({
   const t = await getTranslations();
   const selected = projects.filter((p) => p.featured).slice(0, 4);
   const photoSelection = photos.filter((p) => p.featured).slice(0, 3);
+  const stack = [
+    ...selected.slice(0, 1).map((p) => ({
+      src: p.cover,
+      width: 1200,
+      height: 850,
+      label: p.sample ? t("sample") : p.title[locale],
+    })),
+    ...photoSelection.slice(0, 2).map((p) => ({
+      src: p.src,
+      width: p.width,
+      height: p.height,
+      label: p.caption?.[locale] || t("photography"),
+    })),
+  ];
+  const lines = (text: string) =>
+    text.split("\n").map((line, i) => (
+      <Fragment key={i}>
+        {i > 0 && <br />}
+        {line}
+      </Fragment>
+    ));
   return (
     <main id="main">
       <Choreography hero>
         <section id="top" className="hero">
-          <div className="edition-row mono">
+          <div className="edition-row mono" data-hero-fade>
             <span>{t("edition")}</span>
             <span>{t("student")}</span>
           </div>
           <div className="hero-name-row">
-            <p>{t("hello")}</p>
-            <h1 data-intro-title>
+            <p data-hero-fade>{t("hello")}</p>
+            <h1 data-split-chars>
               {profile.name}
               <span className="orange-dot">.</span>
             </h1>
-            <span className="name-spark" aria-hidden="true">
+            <span className="hero-ribbon mono" data-ribbon aria-hidden="true">
+              {t("ribbon")}
+            </span>
+            <span className="hero-pill" data-sticker aria-hidden="true">
+              <span data-float>{t("sticker")}</span>
+            </span>
+            <span className="name-spark" data-sticker aria-hidden="true">
               ✳
             </span>
           </div>
@@ -54,54 +82,72 @@ export default async function Home({
                 <br />
                 <em>{t("heroAccent")}</em>
               </h2>
-              <p>{t("heroIntro")}</p>
-              <Link className="button primary" href={`/${locale}/projects/`}>
-                {t("viewWork")}
-                <span>↗</span>
-              </Link>
-              <div className="interest-tags mono">
-                <span>WEB DEV</span>
-                <span>UI/UX</span>
-                <span>DATA</span>
-                <span>MOBILE</span>
+              <p className="rotator-line" data-hero-fade>
+                <span className="mono">{t("exploring")}</span>
+                <WordRotator
+                  words={["web", "uiux", "data", "mobile"].map((f) => t(f))}
+                />
+              </p>
+              <p data-hero-fade>{t("heroIntro")}</p>
+              <div data-hero-fade>
+                <Magnetic>
+                  <Link
+                    className="button primary"
+                    href={`/${locale}/projects/`}
+                  >
+                    {t("viewWork")}
+                    <span>↗</span>
+                  </Link>
+                </Magnetic>
               </div>
             </div>
-            <div className="hero-collage">
-              <div className="collage-grid" aria-hidden="true" />
-              <div className="hero-window" data-collage>
-                {selected[0] ? (
-                  <Image
-                    src={selected[0].cover}
-                    alt={selected[0].alt[locale]}
-                    width={1200}
-                    height={850}
-                    priority
-                    fetchPriority="high"
-                    sizes="(max-width:767px) 70vw, 500px"
-                  />
-                ) : (
-                  <div className="abstract-window" aria-hidden="true">
-                    <span>○ ○ ○</span>
-                    <b>{"{ }"}</b>
+            <div className="hero-stack" aria-hidden="true">
+              {stack.map((card, i) => (
+                <div
+                  key={card.src}
+                  className={`stack-card stack-${i}`}
+                  data-speed={[0.35, 0.8, 0.55][i]}
+                >
+                  <div className="stack-depth" data-depth={[0.6, 1.2, 0.9][i]}>
+                    <div className="stack-inner" data-collage>
+                      <Image
+                        src={card.src}
+                        alt=""
+                        width={card.width}
+                        height={card.height}
+                        priority={i === 0}
+                        fetchPriority={i === 0 ? "high" : undefined}
+                        sizes="(max-width:767px) 55vw, 420px"
+                      />
+                      <small className="mono">{card.label}</small>
+                    </div>
                   </div>
-                )}
-                <small className="mono">
-                  {selected[0]?.sample ? t("sample") : t("visualIndex")}
-                </small>
-              </div>
-              <div className="hero-character" data-collage>
-                <Mascot priority />
-                <span className="character-caption mono">
-                  {t("creativeNote")}
-                </span>
-              </div>
-              <span className="hero-sticker" data-sticker aria-hidden="true">
-                &lt; / &gt;<small>CODE & CURIOSITY</small>
+                </div>
+              ))}
+              <span className="hero-badge" data-sticker>
+                <RotatingBadge text="CODE & CURIOSITY ✳ CODE & CURIOSITY ✳ " />
               </span>
-              <span className="orbit-note" data-collage aria-hidden="true">
-                ↗
+              <span className="hero-note mono" data-hero-fade>
+                {t("creativeNote")}
               </span>
             </div>
+          </div>
+          <div className="hero-tapes">
+            <Marquee
+              className="tape tape-accent"
+              items={[
+                t("web"),
+                t("uiux"),
+                t("data"),
+                t("mobile"),
+                t("photography"),
+              ]}
+            />
+            <Marquee
+              className="tape tape-ink"
+              reverse
+              items={[t("heroLine") + " " + t("heroAccent"), t("creativeNote")]}
+            />
           </div>
           <div className="hero-bottom mono">
             <span>{t("scroll")} ↓</span>
@@ -109,11 +155,11 @@ export default async function Home({
             <span>© {new Date().getFullYear()}</span>
           </div>
         </section>
-        <section id="work" className="section work-section">
+        <section id="work" className="section work-section" data-horizontal>
           <div className="editorial-line" data-reveal="line" />
           <div className="section-heading">
             <p className="eyebrow">01 / {t("work")}</p>
-            <h2 data-reveal>
+            <h2 data-split>
               {t("selected")}
               <span className="orange-dot">.</span>
             </h2>
@@ -124,27 +170,34 @@ export default async function Home({
           <div className="selected-layout">
             <aside>
               <p data-reveal="caption">{t("selectedIntro")}</p>
-              <span className="aside-star" aria-hidden="true">
-                ✳
-              </span>
+              <RotatingBadge
+                className="aside-badge"
+                text={`${t("visualIndex")} ✳ ${t("visualIndex")} ✳ `}
+                center="✳"
+              />
               <p className="mono aside-note">
                 {t("visualIndex")}
                 <br />
                 WEB / UI / DATA / MOBILE
               </p>
             </aside>
-            <div className="project-grid selected-grid">
-              {selected.map((p, i) => (
-                <div key={p.slug} data-reveal="media">
-                  <ProjectCard project={p} index={i} />
-                </div>
-              ))}
-              {!selected.length && (
-                <div className="empty">
-                  <h3>{t("emptyProjects")}</h3>
-                  <p>{t("emptyHint")}</p>
-                </div>
-              )}
+            <div className="selected-wrap">
+              <div className="project-grid selected-grid" data-track>
+                {selected.map((p, i) => (
+                  <div key={p.slug} data-reveal="media">
+                    <ProjectCard project={p} index={i} />
+                  </div>
+                ))}
+                {!selected.length && (
+                  <div className="empty">
+                    <h3>{t("emptyProjects")}</h3>
+                    <p>{t("emptyHint")}</p>
+                  </div>
+                )}
+              </div>
+              <span className="track-progress" aria-hidden="true">
+                <span data-track-progress />
+              </span>
             </div>
           </div>
         </section>
@@ -153,8 +206,8 @@ export default async function Home({
           <div className="about-grid">
             <div>
               <p className="eyebrow">02 / {t("aboutLabel")}</p>
-              <h2 className="display-heading" data-reveal>
-                {t("aboutTitle")}
+              <h2 className="display-heading" data-fill>
+                {lines(t("aboutTitle"))}
               </h2>
             </div>
             <div className="about-copy">
@@ -197,7 +250,7 @@ export default async function Home({
             </div>
           </div>
           <div className="interests-heading">
-            <h3 data-reveal>{t("interests")}</h3>
+            <h3 data-split>{t("interests")}</h3>
             <p>{t("interestsIntro")}</p>
           </div>
           <Interests />
@@ -211,27 +264,42 @@ export default async function Home({
           <div className="editorial-line" data-reveal="line" />
           <div className="section-heading">
             <p className="eyebrow">03 / {t("photography")}</p>
-            <h2 data-reveal>{t("photoTitle")}</h2>
+            <h2 data-split>{t("photoTitle")}</h2>
             <Link className="text-link" href={`/${locale}/photography/`}>
               {t("openGallery")} ↗
             </Link>
           </div>
           <div className="photo-intro">
             <p data-reveal="caption">{t("photoIntro")}</p>
-            <Mascot pose="shooting" className="photo-mascot" />
           </div>
           {photoSelection.some((p) => p.sample) && (
             <p className="sample-note">{t("photoSample")}</p>
           )}
-          <Gallery photos={photoSelection} teaser />
+          <div className="photo-stage">
+            <svg
+              className="outline-word"
+              data-drift
+              viewBox="0 0 1000 200"
+              aria-hidden="true"
+            >
+              <text x="0" y="165">
+                {t("galleryWord")}
+              </text>
+            </svg>
+            <Gallery photos={photoSelection} teaser />
+          </div>
         </section>
         <section id="contact" className="section contact-section">
           <div className="editorial-line" data-reveal="line" />
           <p className="eyebrow">04 / {t("contact")}</p>
-          <h2 className="display-heading" data-reveal>
-            {t("contactTitle")}
+          <h2 className="display-heading" data-split>
+            {lines(t("contactTitle"))}
             <span className="orange-dot">↗</span>
           </h2>
+          <Marquee
+            className="tape tape-accent contact-tape"
+            items={[t("contactMarquee")]}
+          />
           <Contact
             email={profile.email}
             preview={preview}
