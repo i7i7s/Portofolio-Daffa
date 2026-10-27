@@ -9,12 +9,12 @@
     "width": 1000,
     "height": 1200,
     "alt": {
-      "id": "Ilustrasi geometris contoh: cahaya & bidang",
-      "en": "Sample geometric illustration: light & planes"
+      "id": "Ilustrasi contoh: tembok jam empat sore",
+      "en": "Sample illustration: a wall at four in the afternoon"
     },
     "caption": {
-      "id": "Cahaya & bidang",
-      "en": "Light & planes"
+      "id": "Tembok jam empat sore",
+      "en": "A wall at four in the afternoon"
     }
   },
   {
@@ -27,12 +27,12 @@
     "width": 1000,
     "height": 1200,
     "alt": {
-      "id": "Ilustrasi geometris contoh: jeda di tepian",
-      "en": "Sample geometric illustration: a quiet edge"
+      "id": "Ilustrasi contoh: pantai waktu mendung",
+      "en": "Sample illustration: the beach on a cloudy day"
     },
     "caption": {
-      "id": "Jeda di tepian",
-      "en": "A quiet edge"
+      "id": "Pantai waktu mendung",
+      "en": "The beach on a cloudy day"
     }
   },
   {
@@ -45,12 +45,12 @@
     "width": 1000,
     "height": 1200,
     "alt": {
-      "id": "Ilustrasi geometris contoh: percakapan bentuk",
-      "en": "Sample geometric illustration: shapes in conversation"
+      "id": "Ilustrasi contoh: dua bangunan di ujung gang",
+      "en": "Sample illustration: two buildings at the end of an alley"
     },
     "caption": {
-      "id": "Percakapan bentuk",
-      "en": "Shapes in conversation"
+      "id": "Dua bangunan di ujung gang",
+      "en": "Two buildings at the end of an alley"
     }
   },
   {
@@ -63,12 +63,12 @@
     "width": 1000,
     "height": 1200,
     "alt": {
-      "id": "Ilustrasi geometris contoh: setelah biru",
-      "en": "Sample geometric illustration: after the blue"
+      "id": "Ilustrasi contoh: langit sesudah hujan",
+      "en": "Sample illustration: the sky after rain"
     },
     "caption": {
-      "id": "Setelah biru",
-      "en": "After the blue"
+      "id": "Langit sesudah hujan",
+      "en": "The sky after rain"
     }
   }
 ]

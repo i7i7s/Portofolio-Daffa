@@ -8,6 +8,12 @@ const manrope = localFont({
   variable: "--font-manrope",
   display: "swap",
 });
+const plex = localFont({
+  src: "../fonts/ibm-plex-mono-latin-400-normal.woff2",
+  variable: "--font-plex",
+  weight: "400",
+  display: "swap",
+});
 // Runs before paint: hides the hero until its intro starts and decides
 // whether the session preloader plays. Falls back to visible after 4s.
 const bootMotion = `try{var h=document.documentElement;if(!matchMedia("(prefers-reduced-motion: reduce)").matches){h.classList.add("motion-ok");if(!sessionStorage.getItem("portfolio-intro"))h.classList.add("is-preloading");setTimeout(function(){h.classList.add("hero-ready");h.classList.remove("is-preloading")},4000)}}catch(e){}`;
@@ -18,7 +24,11 @@ export default async function RootLayout({
 }) {
   const locale = await getLocale();
   return (
-    <html lang={locale} className={manrope.variable} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`${manrope.variable} ${plex.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootMotion }} />
       </head>

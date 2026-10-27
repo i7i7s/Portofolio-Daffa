@@ -38,7 +38,7 @@ Port bisa diganti, misalnya `npm run dev -- --port 3003`. Server memakai loopbac
 Edit `content/profile.json`:
 
 - `name`: nama yang ingin ditampilkan; tidak harus nama legal.
-- `bio.id` dan `bio.en`: bio dalam dua bahasa.
+- `bio.id` dan `bio.en`: bio dalam dua bahasa. Isi bagian dalam kurung siku, misalnya `[nama kampus]`. `npm run build:release` gagal selama masih ada kurung siku.
 - `email`: alamat asli. Kosong berarti tautan email dan tombol salin publik disembunyikan.
 - `cv`: misalnya `/files/cv.pdf` setelah menaruh berkas di `public/files/cv.pdf`, atau URL HTTPS.
 - `socials`: misalnya `[{"label":"GitHub","url":"https://github.com/akun-anda"}]`.
@@ -48,6 +48,16 @@ Edit `content/profile.json`:
 - `siteUrl`: domain publik tanpa garis miring terakhir, misalnya `https://portfolio-anda.vercel.app`.
 
 Kontak contoh `hello@example.com` hanya tersedia di panel uji yang tertutup secara default dalam pratinjau. Alamat itu bukan kontak pemilik. Panel dipakai untuk memeriksa clipboard dan pose sukses tanpa mengarang email pribadi.
+
+## Menulis teks
+
+Teks di `messages/` dan `content/` sudah ditulis ulang supaya tidak terdengar seperti hasil AI. Kalau menambah atau mengganti teks, pegangan ini membantu:
+
+- Tulis seperti ngomong ke orang, pakai "saya". Kalau sebuah kalimat tidak akan kamu ucapkan ke teman, ganti.
+- Fakta lebih kuat dari klaim. "Dibuat dengan Next.js" lebih jujur daripada "dibangun dengan rasa ingin tahu". Hindari kata seperti *passionate*, inovatif, solusi, pengalaman digital, dan "X bertemu Y".
+- Jangan selalu mendaftar tiga hal ("kode, desain, dan sudut pandang"). Dua atau satu biasanya cukup.
+- Jangan pakai tanda pisah panjang (—). Pakai titik atau koma.
+- Ringkasan proyek cukup satu kalimat tentang apa yang dibuat dan untuk siapa. Cerita lengkapnya ada di halaman proyek.
 
 ## Menambahkan satu proyek
 

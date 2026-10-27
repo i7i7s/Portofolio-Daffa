@@ -31,7 +31,7 @@ export default async function Photography({
     <main id="main">
       <Choreography>
         <section className="page-intro" id="top">
-          <p className="eyebrow">03 / {t("photography")}</p>
+          <p className="eyebrow">{t("photography")}</p>
           <div className="page-title-row photo-title">
             <h1 data-page-title>{t("photoTitle")}</h1>
             <RotatingBadge

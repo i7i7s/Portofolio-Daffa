@@ -89,7 +89,7 @@ export function Header({ name }: { name: string }) {
       <Link
         className="wordmark"
         href={`/${locale}/`}
-        aria-label={`${name} ${t("portfolio")} — ${t("home")}`}
+        aria-label={`${name} ${t("portfolio")}, ${t("home")}`}
       >
         <span className="brand-mark" aria-hidden="true">
           ✳

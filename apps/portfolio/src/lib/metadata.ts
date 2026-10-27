@@ -9,7 +9,7 @@ export function pageMetadata(
 ): Metadata {
   const root = profile.siteUrl || "http://localhost:3000";
   return {
-    title: `${title} — ${profile.name}`,
+    title: `${title} · ${profile.name}`,
     description,
     metadataBase: new URL(root),
     alternates: {
@@ -18,7 +18,7 @@ export function pageMetadata(
     },
     robots: preview ? { index: false, follow: false } : undefined,
     openGraph: {
-      title: `${title} — ${profile.name}`,
+      title: `${title} · ${profile.name}`,
       description,
       locale: locale === "id" ? "id_ID" : "en_US",
       type: "website",

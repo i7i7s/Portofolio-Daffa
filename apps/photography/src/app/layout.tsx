@@ -21,8 +21,8 @@ const plex = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: `${site.title} — ${site.name}`,
-    template: `%s — ${site.title}`,
+    default: `${site.title} · ${site.name}`,
+    template: `%s · ${site.title}`,
   },
   description: site.intro,
 };
@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <span>
             © {new Date().getFullYear()} {site.name}
           </span>
-          <span>Dicetak dari arsip pribadi</span>
+          <span>Dibuat dengan Next.js, tanpa library animasi</span>
           <a href={site.portfolioUrl}>Kembali ke portofolio ↗</a>
         </footer>
       </body>

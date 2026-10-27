@@ -112,7 +112,7 @@ export function Gallery({
               data-cursor={t("cursorOpen")}
               data-reveal={teaser ? "media" : undefined}
               onClick={(e) => open(i, e.currentTarget)}
-              aria-label={`${t("openPhoto")}: ${p.caption?.[locale] || p.alt[locale]}${p.sample ? ` — ${t("sample")}` : ""}`}
+              aria-label={`${t("openPhoto")}: ${p.caption?.[locale] || p.alt[locale]}${p.sample ? ` (${t("sample")})` : ""}`}
             >
               <Image
                 src={p.src}

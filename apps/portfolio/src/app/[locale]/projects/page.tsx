@@ -27,7 +27,9 @@ export default async function Projects({
     <main id="main">
       <Choreography>
         <section className="page-intro" id="top">
-          <p className="eyebrow">01 / {t("visualIndex")}</p>
+          <p className="eyebrow">
+            {t("projectCount", { count: projects.length })}
+          </p>
           <div className="page-title-row">
             <h1 data-page-title>
               {t("allProjects")}
@@ -35,7 +37,7 @@ export default async function Projects({
             </h1>
             <RotatingBadge
               className="title-badge"
-              text={`${t("visualIndex")} ✳ ${t("visualIndex")} ✳ `}
+              text={`${t("allProjects")} ✳ ${t("allProjects")} ✳ `}
             />
           </div>
           <p>{t("workIntro")}</p>

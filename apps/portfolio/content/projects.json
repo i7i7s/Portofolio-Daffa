@@ -7,12 +7,12 @@
     "order": 1,
     "featured": true,
     "title": {
-      "id": "Ruang — antarmuka web",
-      "en": "Ruang — web interface"
+      "id": "Ruang",
+      "en": "Ruang"
     },
     "summary": {
-      "id": "Eksplorasi struktur halaman dan antarmuka web yang tenang.",
-      "en": "Exploring page structure and a calm web interface."
+      "id": "Contoh halaman jurnal dengan tata letak yang lega.",
+      "en": "A sample journal page with a roomy layout."
     },
     "cover": "/images/projects/ruang.svg",
     "alt": {
@@ -31,12 +31,12 @@
     "order": 2,
     "featured": true,
     "title": {
-      "id": "Saku — alur aplikasi",
-      "en": "Saku — app flow"
+      "id": "Saku",
+      "en": "Saku"
     },
     "summary": {
-      "id": "Studi alur sederhana untuk layar kecil.",
-      "en": "A simple flow study for small screens."
+      "id": "Contoh alur aplikasi untuk layar HP.",
+      "en": "A sample app flow for phone screens."
     },
     "cover": "/images/projects/saku.svg",
     "alt": {
@@ -55,12 +55,12 @@
     "order": 3,
     "featured": true,
     "title": {
-      "id": "Pola — cerita dalam data",
-      "en": "Pola — stories in data"
+      "id": "Pola",
+      "en": "Pola"
     },
     "summary": {
-      "id": "Contoh penyajian grafik dengan konteks yang mudah dibaca.",
-      "en": "A sample chart presentation with readable context."
+      "id": "Contoh grafik dengan keterangan yang bisa dibaca sekilas.",
+      "en": "A sample chart with labels you can read at a glance."
     },
     "cover": "/images/projects/pola.svg",
     "alt": {

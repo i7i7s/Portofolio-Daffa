@@ -30,14 +30,14 @@ export default function Home() {
       <Clothesline pool={dealt}>
         <p className="intro">{site.intro}</p>
         <p className="mono hint">
-          Arahkan kursor ke jemuran untuk menahannya. Klik cetakan untuk
-          melihatnya lewat jendela bidik.
+          Klik atau ketuk foto untuk membukanya. Kursor di atas tali bikin
+          jemurannya berhenti.
         </p>
       </Clothesline>
       <section id="rol" className="rolls" aria-labelledby="rol-t">
         <div className="rolls-head">
           <p className="mono">Lembar kontak</p>
-          <h2 id="rol-t">Pilih dari rol</h2>
+          <h2 id="rol-t">Semua rol</h2>
           <ol className="roll-index">
             {rolls.map((r) => (
               <li key={r.id}>

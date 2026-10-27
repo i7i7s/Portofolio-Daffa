@@ -2,7 +2,7 @@
   "site": {
     "name": "[Nama Kamu]",
     "title": "Arsip Cahaya",
-    "intro": "Foto yang baru keluar dari kamar gelap. Masih dijemur, belum semuanya dipilih.",
+    "intro": "Foto-foto saya, dikelompokkan per perjalanan. Yang dilingkari merah itu favorit saya. Yang dicoret sengaja saya biarkan di sini.",
     "portfolioUrl": "http://127.0.0.1:3000/id/"
   },
   "rolls": [
@@ -14,12 +14,87 @@
       "stock": "KODAK 400TX",
       "sample": true,
       "frames": [
-        { "file": "kota-hujan/01.jpg", "caption": "Lampu jalan pertama menyala", "exif": { "camera": "Fujifilm X-T30", "lens": "XF 35mm F2", "aperture": 2, "shutter": "1/60", "iso": 1600, "focal": 35, "taken": "2026-02-14T18:41" } },
-        { "file": "kota-hujan/02.jpg", "caption": "Genangan di perempatan", "mark": "keep", "exif": { "camera": "Fujifilm X-T30", "lens": "XF 35mm F2", "aperture": 2.8, "shutter": "1/125", "iso": 800, "focal": 35, "taken": "2026-02-14T18:55" } },
-        { "file": "kota-hujan/03.jpg", "caption": "Atap-atap basah", "exif": { "camera": "Fujifilm X-T30", "lens": "XF 35mm F2", "aperture": 4, "shutter": "1/250", "iso": 400, "focal": 35, "taken": "2026-02-14T17:20" } },
-        { "file": "kota-hujan/04.jpg", "caption": "Jendela kantor yang belum padam", "mark": "reject", "exif": { "camera": "Fujifilm X-T30", "lens": "XF 35mm F2", "aperture": 2, "shutter": "1/30", "iso": 3200, "focal": 35, "taken": "2026-02-14T19:12" } },
-        { "file": "kota-hujan/05.jpg", "caption": "Langit sisa mendung", "mark": "keep", "exif": { "camera": "Fujifilm X-T30", "lens": "XF 35mm F2", "aperture": 5.6, "shutter": "1/500", "iso": 200, "focal": 35, "taken": "2026-02-14T17:48" } },
-        { "file": "kota-hujan/06.jpg", "caption": "Pulang lewat jalan kecil", "exif": { "camera": "Fujifilm X-T30", "lens": "XF 35mm F2", "aperture": 2, "shutter": "1/45", "iso": 1600, "focal": 35, "taken": "2026-02-14T19:30" } }
+        {
+          "file": "kota-hujan/01.jpg",
+          "caption": "Lampu jalan pertama menyala",
+          "exif": {
+            "camera": "Fujifilm X-T30",
+            "lens": "XF 35mm F2",
+            "aperture": 2,
+            "shutter": "1/60",
+            "iso": 1600,
+            "focal": 35,
+            "taken": "2026-02-14T18:41"
+          }
+        },
+        {
+          "file": "kota-hujan/02.jpg",
+          "caption": "Genangan di perempatan",
+          "mark": "keep",
+          "exif": {
+            "camera": "Fujifilm X-T30",
+            "lens": "XF 35mm F2",
+            "aperture": 2.8,
+            "shutter": "1/125",
+            "iso": 800,
+            "focal": 35,
+            "taken": "2026-02-14T18:55"
+          }
+        },
+        {
+          "file": "kota-hujan/03.jpg",
+          "caption": "Atap-atap basah",
+          "exif": {
+            "camera": "Fujifilm X-T30",
+            "lens": "XF 35mm F2",
+            "aperture": 4,
+            "shutter": "1/250",
+            "iso": 400,
+            "focal": 35,
+            "taken": "2026-02-14T17:20"
+          }
+        },
+        {
+          "file": "kota-hujan/04.jpg",
+          "caption": "Jendela kantor yang belum padam",
+          "mark": "reject",
+          "exif": {
+            "camera": "Fujifilm X-T30",
+            "lens": "XF 35mm F2",
+            "aperture": 2,
+            "shutter": "1/30",
+            "iso": 3200,
+            "focal": 35,
+            "taken": "2026-02-14T19:12"
+          }
+        },
+        {
+          "file": "kota-hujan/05.jpg",
+          "caption": "Langit sisa mendung",
+          "mark": "keep",
+          "exif": {
+            "camera": "Fujifilm X-T30",
+            "lens": "XF 35mm F2",
+            "aperture": 5.6,
+            "shutter": "1/500",
+            "iso": 200,
+            "focal": 35,
+            "taken": "2026-02-14T17:48"
+          }
+        },
+        {
+          "file": "kota-hujan/06.jpg",
+          "caption": "Pulang lewat jalan kecil",
+          "exif": {
+            "camera": "Fujifilm X-T30",
+            "lens": "XF 35mm F2",
+            "aperture": 2,
+            "shutter": "1/45",
+            "iso": 1600,
+            "focal": 35,
+            "taken": "2026-02-14T19:30"
+          }
+        }
       ]
     },
     {
@@ -30,12 +105,87 @@
       "stock": "PORTRA 160",
       "sample": true,
       "frames": [
-        { "file": "pesisir/01.jpg", "caption": "Matahari turun di balik tanjung", "mark": "keep", "exif": { "camera": "Sony A6400", "lens": "Sigma 18-50mm F2.8", "aperture": 8, "shutter": "1/500", "iso": 100, "focal": 24, "taken": "2025-08-03T17:31" } },
-        { "file": "pesisir/02.jpg", "caption": "Ombak kedua", "exif": { "camera": "Sony A6400", "lens": "Sigma 18-50mm F2.8", "aperture": 5.6, "shutter": "1/1000", "iso": 100, "focal": 50, "taken": "2025-08-03T17:38" } },
-        { "file": "pesisir/03.jpg", "caption": "Bukit pasir sore hari", "exif": { "camera": "Sony A6400", "lens": "Sigma 18-50mm F2.8", "aperture": 11, "shutter": "1/250", "iso": 100, "focal": 18, "taken": "2025-08-03T16:52" } },
-        { "file": "pesisir/04.jpg", "caption": "Jam biru di dermaga", "mark": "keep", "exif": { "camera": "Sony A6400", "lens": "Sigma 18-50mm F2.8", "aperture": 2.8, "shutter": "1/30", "iso": 1250, "focal": 35, "taken": "2025-08-03T18:12" } },
-        { "file": "pesisir/05.jpg", "caption": "Bayangan terlalu panjang", "mark": "reject", "exif": { "camera": "Sony A6400", "lens": "Sigma 18-50mm F2.8", "aperture": 8, "shutter": "1/320", "iso": 100, "focal": 18, "taken": "2025-08-03T17:05" } },
-        { "file": "pesisir/06.jpg", "caption": "Air pasang pelan-pelan", "exif": { "camera": "Sony A6400", "lens": "Sigma 18-50mm F2.8", "aperture": 4, "shutter": "1/800", "iso": 100, "focal": 50, "taken": "2025-08-03T17:44" } }
+        {
+          "file": "pesisir/01.jpg",
+          "caption": "Matahari turun di balik tanjung",
+          "mark": "keep",
+          "exif": {
+            "camera": "Sony A6400",
+            "lens": "Sigma 18-50mm F2.8",
+            "aperture": 8,
+            "shutter": "1/500",
+            "iso": 100,
+            "focal": 24,
+            "taken": "2025-08-03T17:31"
+          }
+        },
+        {
+          "file": "pesisir/02.jpg",
+          "caption": "Ombak kedua",
+          "exif": {
+            "camera": "Sony A6400",
+            "lens": "Sigma 18-50mm F2.8",
+            "aperture": 5.6,
+            "shutter": "1/1000",
+            "iso": 100,
+            "focal": 50,
+            "taken": "2025-08-03T17:38"
+          }
+        },
+        {
+          "file": "pesisir/03.jpg",
+          "caption": "Bukit pasir sore hari",
+          "exif": {
+            "camera": "Sony A6400",
+            "lens": "Sigma 18-50mm F2.8",
+            "aperture": 11,
+            "shutter": "1/250",
+            "iso": 100,
+            "focal": 18,
+            "taken": "2025-08-03T16:52"
+          }
+        },
+        {
+          "file": "pesisir/04.jpg",
+          "caption": "Jam biru di dermaga",
+          "mark": "keep",
+          "exif": {
+            "camera": "Sony A6400",
+            "lens": "Sigma 18-50mm F2.8",
+            "aperture": 2.8,
+            "shutter": "1/30",
+            "iso": 1250,
+            "focal": 35,
+            "taken": "2025-08-03T18:12"
+          }
+        },
+        {
+          "file": "pesisir/05.jpg",
+          "caption": "Bayangan terlalu panjang",
+          "mark": "reject",
+          "exif": {
+            "camera": "Sony A6400",
+            "lens": "Sigma 18-50mm F2.8",
+            "aperture": 8,
+            "shutter": "1/320",
+            "iso": 100,
+            "focal": 18,
+            "taken": "2025-08-03T17:05"
+          }
+        },
+        {
+          "file": "pesisir/06.jpg",
+          "caption": "Air pasang pelan-pelan",
+          "exif": {
+            "camera": "Sony A6400",
+            "lens": "Sigma 18-50mm F2.8",
+            "aperture": 4,
+            "shutter": "1/800",
+            "iso": 100,
+            "focal": 50,
+            "taken": "2025-08-03T17:44"
+          }
+        }
       ]
     },
     {
@@ -46,12 +196,87 @@
       "stock": "FUJI C200",
       "sample": true,
       "frames": [
-        { "file": "kebun-pagi/01.jpg", "caption": "Kabut masih rendah", "mark": "keep", "exif": { "camera": "Canon EOS M50", "lens": "EF-M 22mm F2", "aperture": 5.6, "shutter": "1/250", "iso": 200, "focal": 22, "taken": "2025-11-09T06:12" } },
-        { "file": "kebun-pagi/02.jpg", "caption": "Barisan teh di lereng", "exif": { "camera": "Canon EOS M50", "lens": "EF-M 22mm F2", "aperture": 8, "shutter": "1/320", "iso": 200, "focal": 22, "taken": "2025-11-09T06:40" } },
-        { "file": "kebun-pagi/03.jpg", "caption": "Cahaya pertama di bukit", "mark": "keep", "exif": { "camera": "Canon EOS M50", "lens": "EF-M 22mm F2", "aperture": 4, "shutter": "1/500", "iso": 100, "focal": 22, "taken": "2025-11-09T06:05" } },
-        { "file": "kebun-pagi/04.jpg", "caption": "Pohon sendirian", "exif": { "camera": "Canon EOS M50", "lens": "EF-M 22mm F2", "aperture": 2.8, "shutter": "1/640", "iso": 100, "focal": 22, "taken": "2025-11-09T07:02" } },
-        { "file": "kebun-pagi/05.jpg", "caption": "Terlalu terang", "mark": "reject", "exif": { "camera": "Canon EOS M50", "lens": "EF-M 22mm F2", "aperture": 2, "shutter": "1/200", "iso": 400, "focal": 22, "taken": "2025-11-09T07:25" } },
-        { "file": "kebun-pagi/06.jpg", "caption": "Jalan setapak turun", "exif": { "camera": "Canon EOS M50", "lens": "EF-M 22mm F2", "aperture": 5.6, "shutter": "1/400", "iso": 200, "focal": 22, "taken": "2025-11-09T07:48" } }
+        {
+          "file": "kebun-pagi/01.jpg",
+          "caption": "Kabut masih rendah",
+          "mark": "keep",
+          "exif": {
+            "camera": "Canon EOS M50",
+            "lens": "EF-M 22mm F2",
+            "aperture": 5.6,
+            "shutter": "1/250",
+            "iso": 200,
+            "focal": 22,
+            "taken": "2025-11-09T06:12"
+          }
+        },
+        {
+          "file": "kebun-pagi/02.jpg",
+          "caption": "Barisan teh di lereng",
+          "exif": {
+            "camera": "Canon EOS M50",
+            "lens": "EF-M 22mm F2",
+            "aperture": 8,
+            "shutter": "1/320",
+            "iso": 200,
+            "focal": 22,
+            "taken": "2025-11-09T06:40"
+          }
+        },
+        {
+          "file": "kebun-pagi/03.jpg",
+          "caption": "Cahaya pertama di bukit",
+          "mark": "keep",
+          "exif": {
+            "camera": "Canon EOS M50",
+            "lens": "EF-M 22mm F2",
+            "aperture": 4,
+            "shutter": "1/500",
+            "iso": 100,
+            "focal": 22,
+            "taken": "2025-11-09T06:05"
+          }
+        },
+        {
+          "file": "kebun-pagi/04.jpg",
+          "caption": "Pohon sendirian",
+          "exif": {
+            "camera": "Canon EOS M50",
+            "lens": "EF-M 22mm F2",
+            "aperture": 2.8,
+            "shutter": "1/640",
+            "iso": 100,
+            "focal": 22,
+            "taken": "2025-11-09T07:02"
+          }
+        },
+        {
+          "file": "kebun-pagi/05.jpg",
+          "caption": "Terlalu terang",
+          "mark": "reject",
+          "exif": {
+            "camera": "Canon EOS M50",
+            "lens": "EF-M 22mm F2",
+            "aperture": 2,
+            "shutter": "1/200",
+            "iso": 400,
+            "focal": 22,
+            "taken": "2025-11-09T07:25"
+          }
+        },
+        {
+          "file": "kebun-pagi/06.jpg",
+          "caption": "Jalan setapak turun",
+          "exif": {
+            "camera": "Canon EOS M50",
+            "lens": "EF-M 22mm F2",
+            "aperture": 5.6,
+            "shutter": "1/400",
+            "iso": 200,
+            "focal": 22,
+            "taken": "2025-11-09T07:48"
+          }
+        }
       ]
     }
   ]

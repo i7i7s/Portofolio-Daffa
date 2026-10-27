@@ -28,6 +28,7 @@ export default async function Home({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations();
+  const year = new Date().getFullYear();
   const selected = projects.filter((p) => p.featured).slice(0, 4);
   const photoSelection = photos.filter((p) => p.featured).slice(0, 3);
   const stack = [
@@ -56,7 +57,7 @@ export default async function Home({
       <Choreography hero>
         <section id="top" className="hero">
           <div className="edition-row mono" data-hero-fade>
-            <span>{t("edition")}</span>
+            <span>{t("edition", { year })}</span>
             <span>{t("student")}</span>
           </div>
           <div className="hero-name-row">
@@ -125,10 +126,9 @@ export default async function Home({
                 </div>
               ))}
               <span className="hero-badge" data-sticker>
-                <RotatingBadge text="CODE & CURIOSITY ✳ CODE & CURIOSITY ✳ " />
-              </span>
-              <span className="hero-note mono" data-hero-fade>
-                {t("creativeNote")}
+                <RotatingBadge
+                  text={`${profile.name} ✳ ${t("edition", { year })} ✳ `}
+                />
               </span>
             </div>
           </div>
@@ -146,19 +146,22 @@ export default async function Home({
             <Marquee
               className="tape tape-ink"
               reverse
-              items={[t("heroLine") + " " + t("heroAccent"), t("creativeNote")]}
+              items={
+                projects.length
+                  ? projects.map((p) => p.title[locale])
+                  : [t("selected")]
+              }
             />
           </div>
           <div className="hero-bottom mono">
             <span>{t("scroll")} ↓</span>
-            <span>01 — 05</span>
-            <span>© {new Date().getFullYear()}</span>
+            <span>© {year}</span>
           </div>
         </section>
         <section id="work" className="section work-section" data-horizontal>
           <div className="editorial-line" data-reveal="line" />
           <div className="section-heading">
-            <p className="eyebrow">01 / {t("work")}</p>
+            <p className="eyebrow">{t("work")}</p>
             <h2 data-split>
               {t("selected")}
               <span className="orange-dot">.</span>
@@ -172,13 +175,14 @@ export default async function Home({
               <p data-reveal="caption">{t("selectedIntro")}</p>
               <RotatingBadge
                 className="aside-badge"
-                text={`${t("visualIndex")} ✳ ${t("visualIndex")} ✳ `}
+                text={`${t("selected")} ✳ ${t("selected")} ✳ `}
                 center="✳"
               />
               <p className="mono aside-note">
-                {t("visualIndex")}
-                <br />
-                WEB / UI / DATA / MOBILE
+                {t("selectedCount", {
+                  shown: selected.length,
+                  total: projects.length,
+                })}
               </p>
             </aside>
             <div className="selected-wrap">
@@ -205,7 +209,7 @@ export default async function Home({
           <div className="editorial-line" data-reveal="line" />
           <div className="about-grid">
             <div>
-              <p className="eyebrow">02 / {t("aboutLabel")}</p>
+              <p className="eyebrow">{t("aboutLabel")}</p>
               <h2 className="display-heading" data-fill>
                 {lines(t("aboutTitle"))}
               </h2>
@@ -263,7 +267,7 @@ export default async function Home({
         <section id="photography" className="section photo-section">
           <div className="editorial-line" data-reveal="line" />
           <div className="section-heading">
-            <p className="eyebrow">03 / {t("photography")}</p>
+            <p className="eyebrow">{t("photography")}</p>
             <h2 data-split>{t("photoTitle")}</h2>
             <Link className="text-link" href={`/${locale}/photography/`}>
               {t("openGallery")} ↗
@@ -291,7 +295,7 @@ export default async function Home({
         </section>
         <section id="contact" className="section contact-section">
           <div className="editorial-line" data-reveal="line" />
-          <p className="eyebrow">04 / {t("contact")}</p>
+          <p className="eyebrow">{t("contact")}</p>
           <h2 className="display-heading" data-split>
             {lines(t("contactTitle"))}
             <span className="orange-dot">↗</span>

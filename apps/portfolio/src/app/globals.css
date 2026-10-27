@@ -17,6 +17,7 @@
   --mint: #b9e3c6;
   --shadow: 0 30px 60px -24px #17171759;
   --font-sans: var(--font-manrope), Arial, sans-serif;
+  --mono: var(--font-plex), Consolas, "Courier New", monospace;
 }
 * {
   box-sizing: border-box;
@@ -118,7 +119,7 @@ button:hover {
 }
 .mono,
 .eyebrow {
-  font-family: Consolas, "Courier New", monospace;
+  font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -260,9 +261,7 @@ button:hover {
   justify-content: flex-end;
   align-items: center;
   gap: 7px;
-  font:
-    10px Consolas,
-    monospace;
+  font: 10px var(--mono);
   letter-spacing: 0.06em;
   padding-top: 13px;
   color: var(--muted);
@@ -413,9 +412,7 @@ button:hover {
   background: var(--paper);
   color: var(--ink);
   padding: 4px 8px;
-  font:
-    10px Consolas,
-    monospace;
+  font: 10px var(--mono);
   letter-spacing: 0.03em;
 }
 .project-caption {
@@ -564,9 +561,7 @@ button:hover {
   font-size: 19px;
 }
 .sample-note {
-  font:
-    12px/1.6 Consolas,
-    monospace;
+  font: 12px/1.6 var(--mono);
   color: var(--muted);
   border-left: 2px solid var(--accent);
   padding: 8px 14px;
@@ -730,9 +725,7 @@ button:hover {
 }
 .site-footer small {
   grid-column: 1/-1;
-  font:
-    10px Consolas,
-    monospace;
+  font: 10px var(--mono);
   color: var(--muted);
   padding-top: 12px;
 }
@@ -788,9 +781,7 @@ button:hover {
   border-color: var(--ink);
 }
 .filters a span {
-  font:
-    11px Consolas,
-    monospace;
+  font: 11px var(--mono);
 }
 .index-grid {
   gap: 50px 45px;
@@ -849,9 +840,7 @@ button:hover {
   padding-top: 24px;
 }
 .project-facts dt {
-  font:
-    12px Consolas,
-    monospace;
+  font: 12px var(--mono);
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 10px;
@@ -989,9 +978,7 @@ dialog::backdrop {
   border-bottom: 1px solid var(--line);
 }
 .menu-dialog nav small {
-  font:
-    12px Consolas,
-    monospace;
+  font: 12px var(--mono);
 }
 .dialog-close {
   position: absolute;
@@ -1054,9 +1041,7 @@ dialog::backdrop {
   font-size: 14px;
 }
 .photo-controls small {
-  font:
-    11px Consolas,
-    monospace;
+  font: 11px var(--mono);
   color: var(--muted);
 }
 .abstract-window {
@@ -1904,10 +1889,7 @@ dialog::backdrop {
   animation: spin 16s linear infinite;
 }
 .rotating-badge text {
-  font:
-    700 15px Consolas,
-    "Courier New",
-    monospace;
+  font: 700 15px var(--mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   fill: var(--ink);
@@ -2167,16 +2149,6 @@ dialog::backdrop {
   width: 150px;
   background: var(--accent);
   box-shadow: var(--shadow);
-}
-.hero-note {
-  position: absolute;
-  right: 0;
-  bottom: 2%;
-  max-width: 150px;
-  font-size: 11px;
-  line-height: 1.6;
-  text-align: right;
-  color: var(--muted);
 }
 .hero-tapes {
   position: relative;
@@ -2473,9 +2445,6 @@ dialog::backdrop {
   }
   .hero-badge .rotating-badge b {
     font-size: 28px;
-  }
-  .hero-note {
-    display: none;
   }
   .hero-tapes {
     margin-top: 40px;

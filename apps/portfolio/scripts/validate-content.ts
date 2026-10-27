@@ -58,6 +58,8 @@ for (const [locale, messages] of Object.entries({ id, en }))
 if (process.argv.includes("--release")) {
   if (profile.name.includes("["))
     errors.push("Release requires your real display name");
+  if (Object.values(profile.bio).some((text) => text.includes("[")))
+    errors.push("Release requires filling in the [bracketed] parts of the bio");
   if (!profile.email) errors.push("Release requires a valid email");
   if (!profile.siteUrl)
     errors.push("Release requires siteUrl for canonical metadata");

@@ -192,7 +192,7 @@ test("interests, motion extras and clipboard success", async ({
   await expect(page.locator(".hero-stack img")).toHaveCount(3);
   await expect(page.locator(".marquee")).toHaveCount(3);
   await page.getByRole("tab", { name: /Data/ }).click();
-  await expect(page.locator("#interest-panel")).toContainText("Membaca pola");
+  await expect(page.locator("#interest-panel")).toContainText("Mengubah tabel");
   await expect(page.locator(".interest-frame")).toHaveClass(/data/);
   await page.getByRole("tab", { name: /Mobile/ }).click();
   await expect(page.locator(".interest-frame")).toHaveClass(/mobile/);
@@ -266,6 +266,9 @@ test("responsive widths, 200% reflow, axe and initial HTML", async ({
   await page.evaluate(() => {
     document.documentElement.style.fontSize = "";
   });
+  // Let the hero intro finish; mid-fade text would fail contrast for a moment.
+  for (const card of await page.locator(".stack-inner").all())
+    await expect(card).toHaveCSS("opacity", "1");
   const a11y = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
     .analyze();

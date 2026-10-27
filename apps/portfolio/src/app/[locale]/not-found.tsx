@@ -5,7 +5,7 @@ export default async function NotFound() {
   const t = await getTranslations();
   return (
     <main id="main" className="not-found">
-      <p className="eyebrow">404 / {t("portfolio")}</p>
+      <p className="eyebrow">404</p>
       <span className="big-404">
         4<span>✳</span>4
       </span>
