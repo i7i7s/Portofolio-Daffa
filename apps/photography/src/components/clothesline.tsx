@@ -6,9 +6,10 @@ import type { LineFrame } from "@/lib/catalog";
 
 const PEGS = 7;
 
-// Prints clipped to a diagonal drying line. Each peg slides down the rope
-// on a CSS animation; when it leaves the frame it comes back with a random
-// photo nobody else on the line is showing.
+// Prints clipped to a drying line strung through 3D space, from the back of
+// the room (upper left) toward the viewer (lower right). Each peg slides down
+// the sagging rope on a CSS animation; when it leaves the frame it comes back
+// with a random photo nobody else on the line is showing.
 export function Clothesline({
   pool,
   children,
@@ -38,6 +39,15 @@ export function Clothesline({
     >
       {children && <div className="line-note">{children}</div>}
       <div className="line-rope">
+        <svg
+          className="rope"
+          viewBox="0 0 136 10"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path d="M0 0 Q68 10 136 0" />
+          <path d="M0 0 Q68 10 136 0" className="twist" />
+        </svg>
         {shown.map((index, slot) => {
           const frame = pool[index];
           return (
@@ -49,6 +59,7 @@ export function Clothesline({
                   "--i": slot,
                   "--sway": `${2.4 + (slot % 3) * 0.55}s`,
                   "--lift": `${(slot % 2) * 14}px`,
+                  "--twist": `${3.1 + (slot % 4) * 0.7}s`,
                 } as CSSProperties
               }
               onAnimationIteration={(e) => {
@@ -62,16 +73,18 @@ export function Clothesline({
               <div className="peg-hang">
                 <span className="pin" aria-hidden="true" />
                 <Link href={frame.href} className="print">
-                  <Image
-                    src={frame.src}
-                    alt={frame.caption}
-                    width={frame.width}
-                    height={frame.height}
-                    placeholder="blur"
-                    blurDataURL={frame.blur}
-                    sizes="(max-width: 700px) 130px, 200px"
-                    priority={slot < 3}
-                  />
+                  <span className="print-card">
+                    <Image
+                      src={frame.src}
+                      alt={frame.caption}
+                      width={frame.width}
+                      height={frame.height}
+                      placeholder="blur"
+                      blurDataURL={frame.blur}
+                      sizes="(max-width: 700px) 220px, 360px"
+                      priority={slot < 3}
+                    />
+                  </span>
                 </Link>
               </div>
             </div>

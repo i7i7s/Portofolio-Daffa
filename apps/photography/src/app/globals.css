@@ -192,17 +192,28 @@ img {
   color: var(--muted);
 }
 
-/* Drying line */
+/* Drying line, in 3D. The rope runs from the back of the room (upper left)
+   toward the viewer (lower right) and sags under the prints. Prints hang
+   parallel to the rope, so the far ones are seen edge-on and the near ones
+   grow as they approach. Units are cqw of .line, so the rope keeps its shape
+   at every width. */
 .line {
-  --angle: 11deg;
-  --travel: 36s;
+  --angle: 11deg; /* downward slope of the rope */
+  --yaw: -40deg; /* how far the rope turns toward the viewer */
+  --depth: -420px; /* pushes the whole line back from the screen */
+  --x0: -12cqw; /* where the rope starts, off to the far left */
+  --span: 136cqw; /* rope length; pegs are spaced span / 7 apart */
+  --travel: 38s;
   --step: calc(var(--travel) / -7);
   position: relative;
-  height: clamp(460px, 52vw, 720px);
+  height: clamp(480px, 54vw, 760px);
   overflow: clip;
   margin-top: clamp(-150px, -8vw, -40px);
+  container-type: inline-size;
+  perspective: 1200px;
+  perspective-origin: 30% 0%;
 }
-/* The intro sits in the empty triangle above the rope. */
+/* The intro sits in the empty corner above the rope. */
 .line-note {
   position: absolute;
   right: var(--gutter);
@@ -215,48 +226,99 @@ img {
 }
 .line-rope {
   position: absolute;
-  left: -6%;
-  top: 34px;
-  width: 116%;
+  left: 6%;
+  top: 40px;
+  width: 0;
   height: 0;
-  transform: rotate(var(--angle));
+  transform: translateZ(var(--depth)) rotateY(var(--yaw)) rotateZ(var(--angle));
   transform-origin: 0 0;
-  container-type: inline-size;
+  transform-style: preserve-3d;
 }
-.line-rope::before {
-  content: "";
+/* Scaled evenly from its 136 × 10 viewBox, so the sag matches the peg path. */
+.rope {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: -1px;
-  height: 3px;
-  border-radius: 2px;
-  background: repeating-linear-gradient(
-    115deg,
-    var(--rope) 0 5px,
-    color-mix(in srgb, var(--rope) 70%, black) 5px 7px
-  );
-  box-shadow: 0 6px 8px -4px #0004;
+  left: var(--x0);
+  top: 0;
+  width: var(--span);
+  height: calc(var(--span) * 10 / 136);
+  overflow: visible;
+}
+.rope path {
+  fill: none;
+  stroke: var(--rope);
+  stroke-width: 3;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.rope .twist {
+  stroke: color-mix(in srgb, var(--rope) 65%, black);
+  stroke-dasharray: 0.5 0.7;
 }
 .peg {
   position: absolute;
   left: 0;
   top: 0;
+  transform-style: preserve-3d;
   animation: travel var(--travel) linear infinite;
   animation-delay: calc(var(--i) * var(--step));
 }
+/* Follows the rope: x runs along the span, y is the same sag the SVG draws
+   (a parabola, 5/136 of the span deep), sampled at nine points. */
 @keyframes travel {
-  from {
-    transform: translateX(-14cqw);
+  0% {
+    transform: translate(var(--x0), 0);
   }
-  to {
-    transform: translateX(104cqw);
+  12.5% {
+    transform: translate(
+      calc(var(--x0) + var(--span) * 0.125),
+      calc(var(--span) * 0.01608)
+    );
+  }
+  25% {
+    transform: translate(
+      calc(var(--x0) + var(--span) * 0.25),
+      calc(var(--span) * 0.02757)
+    );
+  }
+  37.5% {
+    transform: translate(
+      calc(var(--x0) + var(--span) * 0.375),
+      calc(var(--span) * 0.03447)
+    );
+  }
+  50% {
+    transform: translate(
+      calc(var(--x0) + var(--span) * 0.5),
+      calc(var(--span) * 0.03676)
+    );
+  }
+  62.5% {
+    transform: translate(
+      calc(var(--x0) + var(--span) * 0.625),
+      calc(var(--span) * 0.03447)
+    );
+  }
+  75% {
+    transform: translate(
+      calc(var(--x0) + var(--span) * 0.75),
+      calc(var(--span) * 0.02757)
+    );
+  }
+  87.5% {
+    transform: translate(
+      calc(var(--x0) + var(--span) * 0.875),
+      calc(var(--span) * 0.01608)
+    );
+  }
+  100% {
+    transform: translate(calc(var(--x0) + var(--span) * 1), 0);
   }
 }
 .peg-hang {
   position: relative;
   transform: rotate(calc(var(--angle) * -1));
   transform-origin: 0 0;
+  transform-style: preserve-3d;
 }
 .pin {
   position: absolute;
@@ -292,11 +354,7 @@ img {
   width: clamp(130px, 14vw, 210px);
   translate: -50% 0;
   transform-origin: 50% calc(-12px - var(--lift));
-  padding: 8px 8px 26px;
-  background: #fbfbf8;
-  box-shadow:
-    0 1px 0 #0000000d,
-    0 18px 28px -14px #000a;
+  transform-style: preserve-3d;
   animation: sway var(--sway) ease-in-out infinite alternate;
   transition: scale 0.3s var(--ease);
 }
@@ -312,7 +370,44 @@ img {
     rotate: 4deg;
   }
 }
-/* Prints come onto the line still pale and finish developing as they dry. */
+/* The paper turns a little in the draught and catches less light. */
+.print-card {
+  position: relative;
+  display: block;
+  padding: 8px 8px 26px;
+  background: #fbfbf8;
+  box-shadow:
+    0 1px 0 #0000000d,
+    0 18px 28px -14px #000a;
+  transform-origin: 50% 0;
+  animation: twist var(--twist) ease-in-out infinite alternate;
+}
+.print-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, #fff0 35%, #0000002e);
+  animation: shade var(--twist) ease-in-out infinite alternate;
+}
+@keyframes twist {
+  from {
+    transform: rotateY(-16deg);
+  }
+  to {
+    transform: rotateY(18deg);
+  }
+}
+@keyframes shade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.15;
+  }
+}
+/* Prints come onto the line still pale and finish developing as they dry,
+   which also reads as haze on the far end of the room. */
 .print img {
   animation: dry var(--travel) linear infinite;
   animation-delay: calc(var(--i) * var(--step));
@@ -330,9 +425,12 @@ img {
     filter: none;
   }
 }
-.line:hover :is(.peg, .print, .print img),
-.line:focus-within :is(.peg, .print, .print img),
-.line.is-paused :is(.peg, .print, .print img) {
+.line:hover :is(.peg, .print, .print-card, .print img),
+.line:hover .print-card::after,
+.line:focus-within :is(.peg, .print, .print-card, .print img),
+.line:focus-within .print-card::after,
+.line.is-paused :is(.peg, .print, .print-card, .print img),
+.line.is-paused .print-card::after {
   animation-play-state: paused;
 }
 .line-toggle {
@@ -869,10 +967,18 @@ img {
   }
 }
 @media (max-width: 700px) {
+  /* A longer rope on phones keeps prints apart; only its far half is on
+     screen. */
   .line {
-    --angle: 16deg;
-    height: 600px;
+    --angle: 14deg;
+    --yaw: -26deg;
+    --depth: -200px;
+    --x0: -24cqw;
+    --span: 240cqw;
+    --t-step: 0.15;
+    height: 560px;
     margin-top: 12px;
+    perspective: 1000px;
   }
   .line-note {
     position: static;
@@ -881,12 +987,13 @@ img {
     padding: 0 var(--gutter) 8px;
   }
   .line-rope {
-    width: 190%;
-    left: -24%;
+    left: 0;
     top: 190px;
   }
   .print {
     width: 112px;
+  }
+  .print-card {
     padding: 6px 6px 18px;
   }
   .rolls-head {
@@ -923,8 +1030,13 @@ img {
     animation: none !important;
     transition: none !important;
   }
+  /* A still line: prints spaced along the same sagging curve. */
   .peg {
-    transform: translateX(calc(var(--i) * 15cqw + 6cqw));
+    --t: calc(0.1 + var(--i) * var(--t-step, 0.12));
+    transform: translate(
+      calc(var(--x0) + var(--span) * var(--t)),
+      calc(var(--span) * 20 / 136 * var(--t) * (1 - var(--t)))
+    );
   }
   .js .develop:not(.is-done) img {
     filter: none;

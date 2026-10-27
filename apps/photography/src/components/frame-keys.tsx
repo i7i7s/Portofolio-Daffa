@@ -1,8 +1,10 @@
 "use client";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 
 // ← and → step through the roll, Esc goes back to the contact sheet.
+// A layout effect, so the keys work from the first painted frame; a passive
+// effect can land after the page is already on screen.
 export function FrameKeys({
   prev,
   next,
@@ -13,7 +15,7 @@ export function FrameKeys({
   back: string;
 }) {
   const router = useRouter();
-  useEffect(() => {
+  useLayoutEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
       const target =
