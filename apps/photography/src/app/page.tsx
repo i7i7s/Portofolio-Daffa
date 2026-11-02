@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Clothesline } from "@/components/clothesline";
 import { ContactSheet } from "@/components/contact-sheet";
+import { Orbit } from "@/components/orbit";
 import { allFrames, rollNumber, rolls, site } from "@/lib/catalog";
 
 // Deal photos onto the line one roll at a time so the first prints mix series.
@@ -34,6 +35,11 @@ export default function Home() {
           jemurannya berhenti.
         </p>
       </Clothesline>
+      <Orbit frames={dealt}>
+        Satu lingkaran,
+        <br />
+        semua rol.
+      </Orbit>
       <section id="rol" className="rolls" aria-labelledby="rol-t">
         <div className="rolls-head">
           <p className="mono">Lembar kontak</p>

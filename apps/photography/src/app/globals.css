@@ -453,6 +453,106 @@ img {
   color: var(--paper);
 }
 
+/* Orbit: a ring of prints in 3D that unrolls into a row under the mouse.
+   Positions are written per frame by components/orbit.tsx; this is the
+   stage, the print shape and the fallbacks. */
+.orbit {
+  border-top: 1px solid var(--ink);
+}
+html:not(.js) .orbit {
+  display: none;
+}
+.orbit-stage {
+  position: relative;
+  height: clamp(440px, 56vw, 860px);
+  overflow: clip;
+  perspective: 1600px;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.orbit-stage.is-dragging,
+.orbit-stage.is-dragging .orbit-card {
+  cursor: grabbing;
+}
+.orbit-world,
+.orbit-cards {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+/* Sit a little high so an enlarged print in the row keeps clear of the edge. */
+.orbit-world {
+  top: -5%;
+  bottom: 5%;
+}
+.orbit-title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: max-content;
+  max-width: 92%;
+  margin: 0;
+  text-align: center;
+  font-size: clamp(22px, 5vw, 96px);
+  font-weight: 860;
+  font-stretch: 125%;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.orbit-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width: var(--card-w, 120px);
+  aspect-ratio: 4 / 5;
+  margin-left: calc(var(--card-w, 120px) * -0.5);
+  margin-top: calc(var(--card-w, 120px) * -0.625);
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--line);
+  box-shadow: 0 22px 34px -18px #000b;
+  cursor: pointer;
+  will-change: transform, opacity;
+  -webkit-user-drag: none;
+}
+.orbit-card img {
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+.orbit-stage:not([data-ready]) .orbit-card {
+  visibility: hidden;
+}
+.orbit-hints {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 24px;
+  padding: 0 var(--gutter) 22px;
+  color: var(--muted);
+}
+@media (hover: none) {
+  .orbit-hover-hint {
+    display: none;
+  }
+}
+/* On a phone the ring is too small to hold the title, so it sits above. */
+@media (max-width: 700px) {
+  .orbit-stage {
+    height: 430px;
+  }
+  .orbit-title {
+    top: 6%;
+    translate: -50% 0;
+  }
+}
+
 /* Contact sheets */
 .rolls {
   padding: 72px var(--gutter) 40px;
