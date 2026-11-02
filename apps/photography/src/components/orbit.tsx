@@ -28,9 +28,11 @@ const wrap = (a: number) => ((((a + Math.PI) % TAU) + TAU) % TAU) - Math.PI;
 export function Orbit({
   frames,
   children,
+  heading: Heading = "h2",
 }: {
   frames: LineFrame[];
   children: ReactNode;
+  heading?: "h1" | "h2";
 }) {
   const items = frames.slice(0, MAX_CARDS);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -316,9 +318,9 @@ export function Orbit({
     <section className="orbit" aria-labelledby="orbit-title">
       <div className="orbit-stage" ref={stageRef}>
         <div className="orbit-world">
-          <h2 id="orbit-title" className="orbit-title" ref={titleRef}>
+          <Heading id="orbit-title" className="orbit-title" ref={titleRef}>
             {children}
-          </h2>
+          </Heading>
           {/* The same photos are linked from the contact sheets below, so the
               ring stays out of the tab order and the accessibility tree. */}
           <div className="orbit-cards" aria-hidden="true">

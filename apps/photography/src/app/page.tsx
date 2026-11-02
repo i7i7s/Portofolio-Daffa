@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { Clothesline } from "@/components/clothesline";
 import { ContactSheet } from "@/components/contact-sheet";
 import { Orbit } from "@/components/orbit";
 import { allFrames, rollNumber, rolls, site } from "@/lib/catalog";
 
-// Deal photos onto the line one roll at a time so the first prints mix series.
+// Deal photos onto the ring one roll at a time so neighbours mix series.
 const longest = Math.max(...rolls.map((r) => r.frames.length));
 const dealt = Array.from({ length: longest }, (_, i) =>
   rolls.map((r) =>
@@ -26,20 +25,14 @@ export default function Home() {
             {rolls.length} rol · {frames} frame · {keeps} dipilih
           </span>
         </p>
-        <h1>{site.title}</h1>
       </section>
-      <Clothesline pool={dealt}>
-        <p className="intro">{site.intro}</p>
-        <p className="mono hint">
-          Klik atau ketuk foto untuk membukanya. Kursor di atas tali bikin
-          jemurannya berhenti.
-        </p>
-      </Clothesline>
-      <Orbit frames={dealt}>
-        Satu lingkaran,
-        <br />
-        semua rol.
+      <Orbit frames={dealt} heading="h1">
+        {site.title}
       </Orbit>
+      <div className="hero-foot">
+        <p className="intro">{site.intro}</p>
+        <p className="mono hint">Klik atau ketuk foto untuk membukanya.</p>
+      </div>
       <section id="rol" className="rolls" aria-labelledby="rol-t">
         <div className="rolls-head">
           <p className="mono">Lembar kontak</p>
