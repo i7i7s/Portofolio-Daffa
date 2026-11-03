@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 test("touch swipe and copy failure fallback", async ({ page }, info) => {
-  await page.goto("/id/photography/");
+  await page.goto("/id/#photography");
   if (info.project.name === "mobile") {
     await page.locator(".photo-button").first().tap();
     const rect = await page.locator(".large-photo").boundingBox();
@@ -22,7 +22,7 @@ test("touch swipe and copy failure fallback", async ({ page }, info) => {
       touchPoints: [],
     });
     await expect(page.locator(".photo-controls")).toContainText(
-      "Gambar 2 dari 4",
+      "Gambar 2 dari 3",
     );
     await page.getByRole("button", { name: "Tutup", exact: true }).tap();
   }
@@ -59,7 +59,7 @@ test("ID/EN pages, metadata, images, localized 404", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   for (const locale of ["id", "en"])
-    for (const route of ["", "projects/", "projects/ruang/", "photography/"]) {
+    for (const route of ["", "projects/", "projects/ruang/"]) {
       const response = await page.goto(`/${locale}/${route}`);
       expect(response?.status()).toBe(200);
       await expect(page.locator("html")).toHaveAttribute("lang", locale);
@@ -144,21 +144,21 @@ test("filter URL, locale, project detail, back and forward", async ({
 test("gallery keyboard, touch controls, focus trap and restoration", async ({
   page,
 }) => {
-  await page.goto("/id/photography/");
+  await page.goto("/id/#photography");
   const trigger = page.locator(".photo-button").first();
   await trigger.click();
   const dialog = page.locator(".photo-dialog");
   await expect(dialog).toBeVisible();
   await expect(dialog.locator(".photo-controls")).toContainText(
-    "Gambar 1 dari 4",
+    "Gambar 1 dari 3",
   );
   await page.keyboard.press("ArrowRight");
   await expect(dialog.locator(".photo-controls")).toContainText(
-    "Gambar 2 dari 4",
+    "Gambar 2 dari 3",
   );
   await dialog.getByRole("button", { name: "Foto sebelumnya" }).click();
   await expect(dialog.locator(".photo-controls")).toContainText(
-    "Gambar 1 dari 4",
+    "Gambar 1 dari 3",
   );
   for (let i = 0; i < 6; i++) {
     await page.keyboard.press("Tab");
@@ -173,7 +173,7 @@ test("gallery keyboard, touch controls, focus trap and restoration", async ({
   await trigger.click();
   await dialog.getByRole("button", { name: "Foto berikutnya" }).click();
   await expect(dialog.locator(".photo-controls")).toContainText(
-    "Gambar 2 dari 4",
+    "Gambar 2 dari 3",
   );
   await dialog.getByRole("button", { name: "Tutup", exact: true }).click();
   await expect(trigger).toBeFocused();
@@ -227,7 +227,7 @@ test("locale keeps anchor, menu focus and reduced-motion contract", async ({
       .locator(".menu-dialog")
       .getByRole("link", { name: /Photography/ })
       .click();
-    await expect(page).toHaveURL(/en\/photography/);
+    await expect(page).toHaveURL(/\/foto\/$/);
     await expect(page.locator(".menu-dialog")).not.toBeVisible();
   }
   if (info.project.name === "reduced") {
@@ -297,7 +297,6 @@ test("repeated navigation, interrupted transitions and no missing route", async 
   }
   await page.locator(".hero .button").click();
   await page.goBack();
-  await expect(page.locator(".page-wipe")).not.toBeInViewport({
-    timeout: 4000,
-  });
+  // the curtain is full-screen and hidden with visibility, not moved away
+  await expect(page.locator(".page-wipe")).toBeHidden({ timeout: 4000 });
 });

@@ -49,7 +49,7 @@ export function Header({ name }: { name: string }) {
   const links = [
     ["work", `/${locale}/projects/`],
     ["about", `/${locale}/#about`],
-    ["photography", `/${locale}/photography/`],
+    ["photography", "/foto/"],
     ["contact", `/${locale}/#contact`],
   ];
   const close = () => {
@@ -105,7 +105,7 @@ export function Header({ name }: { name: string }) {
             key={label}
             href={href}
             className={
-              (path.includes('/projects') ? label==='work' : path.includes('/photography') ? label==='photography' : active===label) ? "active" : ""
+              (path.includes('/projects') ? label==='work' : active===label) ? "active" : ""
             }
           >
             {t(label)}

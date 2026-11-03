@@ -8,11 +8,9 @@
   ],
   "scripts": {
     "dev": "npm run dev -w @daffa/portfolio",
-    "dev:photo": "npm run dev -w @daffa/photography",
-    "build": "npm run build --workspaces",
-    "build:portfolio": "npm run build -w @daffa/portfolio",
-    "build:photo": "npm run build -w @daffa/photography",
-    "lint": "npm run lint --workspaces",
-    "typecheck": "npm run typecheck --workspaces"
+    "build": "npm run build -w @daffa/portfolio",
+    "build:release": "npm run build:release -w @daffa/portfolio",
+    "lint": "npm run lint -w @daffa/portfolio",
+    "typecheck": "npm run typecheck -w @daffa/portfolio"
   }
 }

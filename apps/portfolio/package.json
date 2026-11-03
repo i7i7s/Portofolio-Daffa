@@ -3,17 +3,19 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --hostname 127.0.0.1 --port 3000",
-    "build": "tsx scripts/validate-content.ts && next build",
+    "dev": "npm run catalog && next dev --hostname 127.0.0.1 --port 3000",
+    "build": "tsx scripts/validate-content.ts && npm run catalog && next build",
     "build:preview": "cross-env CONTENT_PREVIEW=true npm run build",
-    "build:release": "tsx scripts/validate-content.ts --release && cross-env CONTENT_PREVIEW=false next build",
+    "build:release": "tsx scripts/validate-content.ts --release && npm run catalog && cross-env CONTENT_PREVIEW=false next build",
     "start": "next start --hostname 127.0.0.1",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "npm run catalog && tsc --noEmit",
     "lint": "eslint .",
     "validate": "tsx scripts/validate-content.ts",
     "test:e2e": "playwright test",
     "start:preview": "cross-env CONTENT_PREVIEW=true next start --hostname 127.0.0.1",
-    "test:content": "node scripts/validate-fixtures.mjs"
+    "test:content": "node scripts/validate-fixtures.mjs",
+    "catalog": "tsx scripts/build-foto-catalog.ts",
+    "samples:foto": "node scripts/create-foto-samples.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
+    "@fontsource-variable/archivo": "^5.3.0",
     "@fontsource-variable/manrope": "^5.3.0",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4.3.3",
@@ -37,9 +40,11 @@
     "cross-env": "^10.1.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.4.3",
+    "exifr": "^7.1.3",
     "lighthouse": "^13.5.0",
     "postcss": "^8.5.31",
     "prettier": "^3.9.10",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3"

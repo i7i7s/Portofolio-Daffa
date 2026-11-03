@@ -932,20 +932,44 @@ button:hover {
   padding: 120px 0;
   min-height: 60vh;
 }
+/* Page curtain: two panels meet in the middle, a ✳ and the name of where we
+   are going sit on top. Positions are driven by MotionRoot. */
 .page-wipe {
   position: fixed;
   inset: 0;
   z-index: 90;
-  background: var(--accent);
-  transform: translateY(100%);
   pointer-events: none;
   display: grid;
   place-items: center;
-  border-bottom: 24px solid var(--paper);
+  align-content: center;
+  gap: 14px;
+  visibility: hidden;
 }
-.page-wipe span {
-  font-size: 100px;
+.wipe-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.2%;
+  background: var(--accent);
+}
+.wipe-l {
+  left: 0;
+  border-right: 6px solid var(--ink);
+}
+.wipe-r {
+  right: 0;
+  border-left: 6px solid var(--ink);
+}
+.wipe-mark,
+.wipe-label {
+  position: relative;
+  opacity: 0;
   color: var(--ink);
+}
+.wipe-label {
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 dialog {
   padding: 0;
@@ -1621,9 +1645,6 @@ dialog::backdrop {
     display: none;
   }
 }
-.page-wipe {
-  visibility: hidden;
-}
 @media (min-width: 768px) {
   .hero-body {
     min-height: 500px;
@@ -1834,9 +1855,9 @@ dialog::backdrop {
 .cursor.is-label span {
   opacity: 1;
 }
-.page-wipe span {
+.wipe-mark {
   display: inline-block;
-  font-size: clamp(120px, 18vw, 260px);
+  font-size: clamp(96px, 14vw, 200px);
   line-height: 1;
 }
 

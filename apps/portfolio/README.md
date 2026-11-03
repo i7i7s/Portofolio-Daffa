@@ -4,16 +4,16 @@ Sumber implementasi berada di folder ini, berdampingan dengan PRD dan aset asli.
 
 ## Menjalankan lokal
 
-Repositori ini monorepo. Website portofolio ada di `apps/portfolio`, website fotografi di `apps/photography`. Gunakan Node.js 22 LTS, lalu dari **folder utama repositori**:
+Repositori ini monorepo dengan satu website di `apps/portfolio`: portofolio di `/id/` dan `/en/`, Arsip Cahaya (fotografi) di `/foto/`. Gunakan Node.js 22 LTS, lalu dari **folder utama repositori**:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Buka **http://127.0.0.1:3000/id/** atau **http://127.0.0.1:3000/en/**. `/` dialihkan ke `/id/`. `npm ci` memasang dependensi kedua website sekaligus dari `package-lock.json` di folder utama. Perintah `npm run …` lain di panduan ini dijalankan dari folder `apps/portfolio`.
+Buka **http://127.0.0.1:3000/id/**, **http://127.0.0.1:3000/en/**, atau **http://127.0.0.1:3000/foto/**. `/` dialihkan ke `/id/`. `npm ci` memasang dependensi dari `package-lock.json` di folder utama. Perintah `npm run …` lain di panduan ini dijalankan dari folder `apps/portfolio`.
 
-Mode development menampilkan tiga proyek dan empat ilustrasi galeri contoh yang berstatus **draft**. Banner lokal dan label pada setiap media membedakan contoh dari karya pribadi. Ilustrasi antarmuka dan lanskap contoh dibuat khusus untuk menguji tata letak; gambar referensi Potozon tidak digunakan sebagai konten website.
+Mode development menampilkan tiga proyek contoh yang berstatus **draft**, dan Arsip Cahaya menampilkan tiga rol foto contoh (ilustrasi berlabel "Contoh"). Banner lokal dan label pada setiap media membedakan contoh dari karya pribadi. Ilustrasi antarmuka dan lanskap contoh dibuat khusus untuk menguji tata letak; gambar referensi Potozon tidak digunakan sebagai konten website.
 
 Untuk meninjau optimasi produksi sambil tetap melihat contoh:
 
@@ -109,30 +109,42 @@ Jelaskan keputusan dan proses Anda.
 
 Gunakan atribut string pada komponen, bukan ekspresi JavaScript. `next-mdx-remote` 6 memblokir ekspresi JS; validasi juga memeriksa sintaks MDX sebelum build. Komponen gambar MDX memakai `next/image`; untuk media dengan rasio berbeda, gunakan array `media` agar dimensi asli tercatat.
 
-## Menambahkan satu foto
+## Arsip Cahaya (`/foto/`)
 
-1. Taruh foto milik Anda di `public/images/photography/nama-foto.webp`. Gunakan dimensi yang cukup untuk tampilan besar, tanpa mengunggah file kamera mentah.
-2. Tambahkan objek berikut pada array `content/photography.json`:
+Website fotografi di dalam repositori yang sama, dengan layout, font (Archivo + IBM Plex Mono), dan CSS sendiri: `src/app/(foto)/`, `src/components/foto/`, `src/lib/foto/`. Pindah dari portofolio ke sini adalah navigasi penuh antar-dokumen (dua root layout), jadi stylesheet keduanya tidak saling bocor. Konsepnya mengikuti proses memotret.
+
+- **Intro rana.** Sekali per kunjungan, `/foto/` dibuka dengan lubang rana yang membesar. Tidak diputar lagi dalam sesi yang sama.
+- **Orbit (beranda).** Foto melingkar di ruang 3D, berputar sendiri, bisa diseret, dan mendapat dorongan saat halaman discroll. Kursor di atas satu foto membuat foto itu menghadap lurus, membesar, dan maju, tapi tetap ikut mengorbit (putarannya melambat); foto di kiri-kanannya bergeser memberi ruang. Dihitung per frame di `orbit.tsx`; atur lewat konstanta di atas file: `TILT`, `AUTO`, `SLOW`, `GROW`, `LIFT`. Maksimal 24 foto (10 di HP). Orbit `aria-hidden` dan tidak masuk urutan Tab karena fotonya sama dengan lembar kontak.
+- **Lembar kontak.** Satu strip film per rol: sprocket, kode tepi, nomor frame. Strip keluar dari sarungnya saat discroll, frame jatuh satu per satu, lingkaran spidol dan coretan digambar. Daftar rol menampilkan foto sampul di samping kursor saat di-hover.
+- **Jendela bidik** (`/foto/<rol>/<frame>/`). Rana membuka, kotak fokus berburu lalu mengunci, foto menarik fokus, angka EXIF berputar sebelum mendarat. ← → pindah frame (foto masuk dari sisi arah itu), Esc kembali.
+- **Kursor reticle.** Di perangkat dengan mouse, kotak bidik mengikuti kursor dan berubah bentuk di atas foto, orbit, dan tautan.
+- **Gerakan.** Animasinya GSAP (`src/components/foto/*`, dimuat hanya di route `/foto/`). Pengaturan "kurangi gerakan" mematikan semuanya: tidak ada state tersembunyi, orbit tampil diam. Keadaan awal yang disembunyikan CSS punya cadangan waktu supaya halaman tidak pernah tertinggal kosong.
+
+### Menambah foto
+
+1. Taruh JPEG di `public/photos/<id-rol>/`, misalnya `public/photos/jogja-malam/01.jpg` (sisi panjang 2000–2500 px cukup; `next/image` membuat versi kecil).
+2. Tambahkan rol di `content/foto/rolls.json`:
 
 ```json
 {
-  "id": "nama-foto",
-  "status": "draft",
-  "sample": false,
-  "order": 5,
-  "featured": true,
-  "src": "/images/photography/nama-foto.webp",
-  "width": 1600,
-  "height": 1200,
-  "alt": {"id":"Deskripsi isi foto.","en":"Description of the photograph."},
-  "caption": {"id":"Judul foto","en":"Photo title"}
+  "id": "jogja-malam",
+  "title": "Jogja malam hari",
+  "place": "Yogyakarta",
+  "year": 2026,
+  "stock": "CINESTILL 800T",
+  "frames": [
+    { "file": "jogja-malam/01.jpg", "caption": "Angkringan terakhir", "mark": "keep" },
+    { "file": "jogja-malam/02.jpg", "caption": "Lampu becak" }
+  ]
 }
 ```
 
-3. `width` dan `height` harus sesuai rasio/dimensi file. `caption`, `album`, `location` (semuanya ID/EN), serta `year` opsional.
-4. Uji di galeri, termasuk tampilan besar, lalu ubah status menjadi `published`.
+- `mark`: `"keep"` dilingkari, `"reject"` dicoret, atau dihapus saja. `stock`: teks tepi film; untuk foto digital isi nama kamera atau seri.
+- Data kamera (kamera, lensa, ƒ, shutter, ISO, focal, waktu) **dibaca otomatis dari EXIF file**. Blok `"exif"` di JSON hanya cadangan.
+- Judul situs dan kalimat pembukanya ada di blok `site` pada file yang sama; nama pemilik diambil dari `content/profile.json`.
+- Hapus rol contoh (`"sample": true`) beserta foldernya setelah foto asli masuk. Foto contoh dibuat oleh `npm run samples:foto`.
 
-Galeri memperlihatkan seluruh komposisi saat dialog terbuka. Tombol, panah keyboard, Escape, dan geser horizontal pada layar sentuh tersedia. Fokus kembali ke thumbnail asal setelah ditutup. Foto pribadi belum tersedia; empat ilustrasi draft tidak diklaim sebagai fotografi Anda.
+`npm run dev`, `build`, dan `typecheck` menjalankan `scripts/build-foto-catalog.ts` lebih dulu: memeriksa JSON, memastikan setiap file ada, membaca EXIF, dan membuat placeholder blur ke `src/generated/foto-catalog.json` (tidak di-commit). Beranda portofolio mengambil tiga foto pilihan dari katalog ini untuk bagian "Fotografi".
 
 ## Bahasa, tema, dan animasi
 
@@ -176,7 +188,7 @@ Pada development, `window.__portfolioMotion()` menyediakan jumlah trigger/tween 
 
 ## Deployment Vercel — dilakukan setelah diminta
 
-1. Isi nama, bio dua bahasa, email, dan `siteUrl`. Pastikan semua proyek/foto yang ingin tampil berstatus `published`, `sample: false`, dan memiliki konten dua bahasa.
+1. Isi nama, bio dua bahasa, email, dan `siteUrl`. Pastikan semua proyek yang ingin tampil berstatus `published`, `sample: false`, dan memiliki konten dua bahasa. Ganti foto contoh Arsip Cahaya dengan foto asli dan hapus rol bertanda `"sample": true`.
 2. Jalankan `npm run build:release`. Perintah ini sengaja gagal selama identitas, email, atau domain belum diisi. Build lokal biasa tetap bisa dilakukan sebelum itu.
 3. Simpan sumber ke repositori Git pilihan Anda; abaikan `node_modules`, `.next`, log, dan berkas environment lokal. Paket ini belum membuat repositori atau mendorong perubahan ke layanan luar.
 4. Pada Vercel, impor repositori, isi **Root Directory** dengan `apps/portfolio`, dan pilih preset **Next.js**. Install command: `npm ci`. Build command: **`npm run build:release`**. Pilih Node 22 atau versi LTS kompatibel. Output directory biarkan default.

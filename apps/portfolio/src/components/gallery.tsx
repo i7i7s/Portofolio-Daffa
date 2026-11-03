@@ -3,14 +3,14 @@ import Image from "next/image";
 import { trapFocus } from "@/lib/focus";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import type { Locale, Photo } from "@/lib/content/schema";
+import type { Locale, GalleryPhoto } from "@/lib/content/schema";
 import { gsap, useGSAP, minimal } from "./motion";
 import { motion } from "@/lib/motion/config";
 export function Gallery({
   photos,
   teaser = false,
 }: {
-  photos: Photo[];
+  photos: GalleryPhoto[];
   teaser?: boolean;
 }) {
   const t = useTranslations();

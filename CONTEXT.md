@@ -8,181 +8,150 @@ Terakhir diperbarui: 3 November 2026 · branch `claude/animation-character-impro
 
 ## 1. Gambaran singkat
 
-Satu repo GitHub (`i7i7s/Portofolio-Daffa`) berisi **dua website Next.js** yang dideploy terpisah:
+Satu repo GitHub (`i7i7s/Portofolio-Daffa`) berisi **satu website Next.js** (`apps/portfolio`) dengan dua dunia visual:
 
-| | Portofolio | Arsip Cahaya (situs foto) |
+| | Portofolio | Arsip Cahaya (fotografi) |
 |---|---|---|
-| Folder | `apps/portfolio` | `apps/photography` |
-| Isi | Proyek web, UI/UX, data, mobile + bio + kontak | Galeri foto per "rol" (seri) |
-| Bahasa | Indonesia + Inggris (`/id/`, `/en/`) | Indonesia saja |
-| Animasi | GSAP, Lenis, SplitText (berat, "wah") | CSS + sedikit JS, tanpa library (ringan) |
-| Port lokal | 3000 | 3002 |
+| Alamat | `/id/`, `/en/` | `/foto/`, `/foto/<rol>/<frame>/` |
+| Isi | Proyek web, UI/UX, data, mobile + bio + kontak | Orbit foto 3D, lembar kontak per "rol", jendela bidik |
+| Bahasa | Indonesia + Inggris | Indonesia saja |
+| Animasi | GSAP, Lenis, SplitText, kursor custom, preloader | GSAP (tanpa Lenis), intro rana, kursor reticle, orbit rAF |
+| Root layout | `src/app/(site)/layout.tsx` | `src/app/(foto)/layout.tsx` |
 
-Pemilik: mahasiswa Sistem Informasi, hobi fotografi. Nama asli belum diisi, masih placeholder `[Nama Kamu]`.
+Menu "Fotografi" di portofolio membuka `/foto/`; tautan "Portofolio" di Arsip Cahaya kembali ke `/id/`. Karena dua root layout, pindah di antara keduanya adalah navigasi dokumen penuh (disengaja: CSS kedua dunia tidak boleh saling bocor).
+
+Pemilik: mahasiswa Sistem Informasi, hobi fotografi. Nama asli belum diisi, masih placeholder `[Nama Kamu]` (satu sumber: `content/profile.json`, dipakai juga oleh Arsip Cahaya).
 
 ## 2. Riwayat keputusan
 
-1. Versi awal dibuat dengan GPT, lalu dinilai kurang "wah", animasinya sedikit, dan ada karakter/maskot orang. **Maskot dihapus total**, termasuk gambar, komponen, dan folder sumbernya. Kalau perlu, semuanya masih bisa diambil dari riwayat git.
-2. Portofolio dirombak dengan animasi yang lebih berani (lihat bagian 4).
-3. Pemilik ingin situs fotografi terpisah dalam satu repo, jadi struktur diubah menjadi **monorepo npm workspaces**.
-4. Riset tema foto menghasilkan konsep "proses memotret": **Lembar Kontak + efek Kamar Gelap + Jendela Bidik**. Halaman risetnya (artifact): https://claude.ai/artifact/Ts5hvpMvAPfkYo3tLdCXt5
-5. Pemilik minta animasi jemuran foto. Sempat dibuat, termasuk versi 3D, lalu **diganti dengan Orbit** atas permintaan pemilik (cincin foto 3D yang lurus saat di-hover, terinspirasi gambar referensi "Halden / Archive").
-6. Copy kedua situs **ditulis ulang supaya tidak terdengar seperti AI**: orang pertama, fakta daripada slogan, tanpa em dash, tanpa daftar tiga hal, tanpa nomor dekoratif.
-7. Audit UX/UI sudah dijalankan. Temuan yang belum dikerjakan ada di bagian 8.
+1. Versi awal dibuat dengan GPT, lalu dinilai kurang "wah", dan ada karakter/maskot orang. **Maskot dihapus total** (masih ada di riwayat git).
+2. Portofolio dirombak dengan animasi yang lebih berani (bagian 4).
+3. Situs fotografi sempat dibuat terpisah (monorepo dua app), dengan konsep "proses memotret": Lembar Kontak + Kamar Gelap + Jendela Bidik. Halaman risetnya: https://claude.ai/artifact/Ts5hvpMvAPfkYo3tLdCXt5
+4. Animasi jemuran foto dibuat, lalu **diganti Orbit** (cincin foto 3D, terinspirasi gambar referensi "Halden / Archive").
+5. Copy kedua sisi **ditulis ulang supaya tidak terdengar seperti AI**: orang pertama, fakta daripada slogan, tanpa em dash, tanpa daftar tiga hal.
+6. **3 Nov 2026: dua app digabung jadi satu website.** Pemilik ingin satu portofolio dengan Arsip Cahaya sebagai landing page terpisah di dalamnya. `apps/photography` dihapus; isinya dipindah ke `apps/portfolio` (route group `(foto)`). Halaman fotografi internal portofolio (4 ilustrasi SVG) dihapus; `/id/photography/` mengalihkan ke `/foto/`; teaser fotografi di beranda memakai foto asli dari katalog Arsip Cahaya.
+7. **Orbit diubah:** kursor di atas foto tidak lagi meluruskan seluruh cincin. Foto itu tetap di cincin dan ikut berputar (melambat), tapi menghadap lurus, membesar, dan maju.
+8. **Arsip Cahaya diberi lapisan GSAP** atas permintaan pemilik ("lebih banyak animasi"). Remotion tidak dipakai (itu untuk render video, bukan animasi halaman).
+9. **Transisi halaman portofolio diganti.** Wipe lama (0,45 dtk per arah) terasa kecepatan dan ternyata bug: CSS `translateY(100%)` dijumlahkan dengan `yPercent` GSAP sehingga overlay hanya berkedip lalu hilang sebelum rute berganti. Gantinya tirai dua panel (menutup 0,75 dtk, bertahan selama rute dimuat, membuka 0,85 dtk) dengan ✳ dan nama tujuan. Animasi masuk hero menunggu tirai terbuka.
+10. Audit `/impeccable critique` dijalankan 3 Nov 2026; temuan yang belum dikerjakan ada di bagian 8.
 
 ## 3. Struktur repo
 
 ```
 Portofolio-Daffa/
-  package.json            ← workspaces + skrip gabungan (dev, dev:photo, build, lint, typecheck)
-  package-lock.json       ← satu lockfile untuk dua app
-  README.md               ← ringkasan + tabel dua website
-  CONTEXT.md              ← file ini
-  PRD-Portofolio-Kreatif.md, MASTER-PROMPT.md, README-MULAI-DI-SINI.md  ← dokumen brief awal (historis)
-  referensi/              ← gambar referensi desain awal (Potozon)
-  apps/
-    portfolio/            ← Next.js 16, next-intl, GSAP
-      src/app/[locale]/   ← halaman: beranda, projects, projects/[slug], photography, 404
-      src/components/
-        motion.tsx        ← MotionRoot (Lenis, page wipe) + Choreography (semua animasi scroll)
-        fx.tsx            ← Preloader, Cursor, ScrollProgress, Marquee, RotatingBadge, Magnetic, WordRotator
-        projects.tsx, gallery.tsx, interests.tsx, contact.tsx, header.tsx
-      content/            ← profile.json, projects.json, projects/<slug>/{id,en}.mdx, photography.json
-      messages/           ← id.json, en.json (semua teks antarmuka; kuncinya harus sama)
-      scripts/            ← validate-content.ts, validate-fixtures.mjs, screenshots.mjs, dll.
-      tests/              ← Playwright (27 test: desktop, mobile, reduced motion)
-      README.md           ← panduan lengkap portofolio (isi konten, deploy, panduan menulis teks)
-    photography/          ← Next.js 16, tanpa library animasi
-      src/app/            ← page.tsx (beranda), foto/[roll]/[frame]/page.tsx (jendela bidik), not-found
-      src/components/
-        orbit.tsx         ← cincin 3D (hero)
-        contact-sheet.tsx ← strip film per rol
-        develop-image.tsx ← efek "cuci foto" saat gambar dimuat
-        frame-keys.tsx    ← tombol ← → Esc di halaman foto
-      src/lib/catalog.ts  ← tipe dan helper katalog
-      src/generated/      ← catalog.json hasil build (di-.gitignore)
-      content/rolls.json  ← data rol, foto, caption, tanda keep/reject, info situs
-      public/photos/      ← file foto (sekarang 18 foto contoh hasil generate)
-      scripts/build-catalog.ts   ← baca EXIF + ukuran + placeholder blur → catalog.json
-      scripts/create-samples.mjs ← membuat foto contoh
-      tests/              ← Playwright (11 test)
-      README.md           ← panduan situs foto (cara menambah foto, deploy)
+  package.json            ← workspaces + skrip (dev, build, build:release, lint, typecheck)
+  package-lock.json
+  README.md  CONTEXT.md
+  PRD-Portofolio-Kreatif.md, MASTER-PROMPT.md, README-MULAI-DI-SINI.md  ← brief awal (historis)
+  referensi/              ← gambar referensi desain awal
+  apps/portfolio/         ← satu-satunya app. Next.js 16, next-intl, GSAP
+    src/app/
+      globals.css         ← CSS portofolio (hanya diimpor (site)/layout)
+      (site)/layout.tsx   ← root layout portofolio: font Manrope, MotionRoot
+      (site)/[locale]/    ← beranda, projects, projects/[slug], photography (redirect ke /foto/), 404
+      (foto)/layout.tsx   ← root layout Arsip Cahaya: font Archivo, boot script, FotoShell
+      (foto)/foto.css     ← CSS Arsip Cahaya (hanya diimpor (foto)/layout)
+      (foto)/foto/        ← page.tsx (beranda foto), [roll]/[frame]/page.tsx, not-found, [...rest]
+      sitemap.ts, robots.ts
+    src/components/       ← portofolio: motion.tsx, fx.tsx, projects, gallery, interests, contact, header
+    src/components/foto/  ← Arsip Cahaya (lihat bagian 5)
+    src/lib/foto/catalog.ts ← tipe dan helper katalog; nama pemilik dari profile.json
+    src/generated/foto-catalog.json ← hasil build (di-.gitignore)
+    src/proxy.ts          ← middleware next-intl; matcher mengecualikan /foto
+    content/              ← profile.json, projects.json, projects/<slug>/{id,en}.mdx
+    content/foto/rolls.json ← rol, foto, caption, tanda keep/reject, judul situs
+    public/photos/        ← foto Arsip Cahaya (sekarang 18 foto contoh hasil generate)
+    messages/             ← id.json, en.json (kunci harus sama)
+    scripts/              ← validate-content.ts, build-foto-catalog.ts, create-foto-samples.mjs, dll.
+    tests/                ← Playwright: portfolio.spec.ts (portofolio), foto.spec.ts (Arsip Cahaya)
 ```
 
-## 4. Portofolio (`apps/portfolio`)
+## 4. Portofolio (`/id/`, `/en/`)
 
-**Stack:** Next.js 16 App Router, React 19.3, TypeScript, Tailwind 4 (hanya sebagai PostCSS; styling utamanya ada di `src/app/globals.css`), next-intl (ID/EN), GSAP (ScrollTrigger, SplitText, Flip), Lenis (smooth scroll), MDX lokal, Zod (validasi konten). Font: Manrope + IBM Plex Mono, di-vendor di `src/fonts`.
+**Stack:** Next.js 16 App Router, React 19.3, TypeScript, Tailwind 4 (hanya PostCSS; styling di `globals.css`), next-intl, GSAP (ScrollTrigger, SplitText, Flip), Lenis, MDX lokal, Zod. Font Manrope + IBM Plex Mono di `src/fonts`.
 
-**Animasi:**
-- **Preloader:** hitungan 000→100, hanya sekali per sesi. Diputuskan oleh inline script di `src/app/layout.tsx` sebelum paint.
-- **Hero:**
-  - nama muncul per huruf;
-  - stiker "Kode × Kamera" dan pita "Sistem Informasi";
-  - kata yang berganti ("Lagi belajar: Web/UI/UX/Data/Mobile");
-  - tumpukan kartu yang bergerak mengikuti mouse dan parallax;
-  - badge berputar dan tombol magnetik.
-- **Pita marquee:** dua pita bersilang yang kecepatannya mengikuti kecepatan scroll.
-- **Karya pilihan:** di-pin dan bergeser horizontal di layar ≥1024px. Kartu miring 3D mengikuti mouse.
-- **Judul dan galeri:** judul section terbuka per huruf, judul "Tentang" menyala kata demi kata, dan foto teaser menyebar seperti kipas.
-- **Kontak:** ledakan bintang saat email disalin.
-- **Global:** kursor custom dengan label, progress bar scroll, dan page wipe.
-- **Reduced motion:** `prefers-reduced-motion` mematikan semua animasi berat.
+**Animasi:** preloader 000→100 sekali per sesi; hero per huruf, stiker, kata berganti, tumpukan kartu mengikuti mouse; dua pita marquee yang mengikuti kecepatan scroll; "Karya pilihan" di-pin dan bergeser horizontal di ≥1024px; judul per huruf; kursor custom; progress scroll; **tirai halaman** (bagian 2 no. 9). `prefers-reduced-motion` mematikan semua animasi berat dan tirai.
 
-**Konten:** semua di `content/` dan `messages/`. Data yang ditandai `sample: true` atau `status: draft` hanya muncul di mode preview. Bio punya placeholder `[nama kampus]`, dan `npm run build:release` **sengaja gagal** selama masih ada kurung siku, email kosong, `siteUrl` kosong, atau nama masih `[Nama Kamu]`.
+**Konten:** `content/` dan `messages/`. Data bertanda `sample: true` atau `status: draft` hanya muncul di mode preview. `npm run build:release` **sengaja gagal** selama masih ada `[`, email kosong, `siteUrl` kosong, atau nama `[Nama Kamu]`. Bagian "Fotografi" di beranda memakai tiga foto pilihan dari katalog Arsip Cahaya (`teaserFrames` di `lib/foto/catalog.ts`).
 
-## 5. Arsip Cahaya (`apps/photography`)
+## 5. Arsip Cahaya (`/foto/`)
 
-**Konsep:** proses memotret. Palet: kertas abu dingin, strip film hitam, kode tepi amber, spidol merah. Font: Archivo variabel (lebar 125% untuk judul) + IBM Plex Mono. Ada tekstur grain halus.
+**Konsep:** proses memotret. Palet kertas abu dingin / hitam film / amber kode tepi / merah spidol (mengikuti tema gelap OS; halaman bidik selalu gelap). Font Archivo variabel + IBM Plex Mono, grain halus.
 
-- **Orbit (hero, `orbit.tsx`):**
-  - Bentuk: foto tersusun melingkar di ruang 3D, miring ke belakang. Judul situs (h1) berada di tengah cincin.
-  - Gerak: cincin berputar sendiri dan bisa diseret dengan inertia.
-  - Hover: saat kursor kena satu foto, cincin terurai jadi barisan lurus di sekitar foto itu, foto itu membesar 1,38× dan maju sedikit, tetangganya bergeser, dan judul memudar.
-  - Teknik: semua dihitung per frame dengan rAF, bukan transisi CSS. Konstanta yang bisa diatur ada di atas file: `TILT`, `AUTO`, `GROW`, `LIFT`, `GRACE`, `MAX_CARDS`.
-  - Batas: maksimal 24 foto, 10 di HP. Loop berhenti saat tidak terlihat.
-  - Aksesibilitas: orbit `aria-hidden` dan tidak masuk urutan Tab, karena foto yang sama sudah ada di lembar kontak.
-- **Lembar kontak:** satu strip film per rol, lengkap dengan lubang sprocket, kode tepi, dan nomor frame. Foto `keep` dilingkari spidol merah, foto `reject` dicoret. Strip "keluar dari sarungnya" saat discroll (CSS `animation-timeline`, hanya Chrome/Safari 26+).
-- **Efek cuci:** foto muncul dari kertas pucat ke warna penuh saat selesai dimuat.
-- **Jendela bidik (`/foto/<rol>/<frame>/`):**
-  - Tampilan: halaman gelap dengan siku bingkai, kotak AF, efek rana, foto yang fokus dari blur, dan HUD EXIF.
-  - Transisi: frame di lembar kontak membesar ke halaman ini lewat React `<ViewTransition>`.
-  - Keyboard: ← → pindah frame, Esc kembali.
-- **Data:** `content/rolls.json`. EXIF (kamera, lensa, ƒ, shutter, ISO, focal, waktu) **dibaca otomatis dari file JPG** saat dev/build. Blok `exif` di JSON hanya cadangan.
-- **Bobot (diukur lokal):** sekitar 152 KB JS gzip (hampir semuanya runtime React/Next) dan 103 KB font. Portofolio sekitar 228 KB JS.
+File di `src/components/foto/`:
+
+| File | Peran |
+|---|---|
+| `gsap.ts` | Registrasi plugin (ScrollTrigger, SplitText, ScrambleText), query `MOTION_OK`, event `foto:intro-done` |
+| `shell.tsx` | Intro rana (lubang membesar, sekali per sesi lewat `sessionStorage`) + kursor reticle |
+| `orbit.tsx` | Cincin 3D (rAF). Hover: foto menghadap lurus, membesar, maju, tetap mengorbit. Dorongan dari scroll. Menunggu intro selesai |
+| `home-fx.tsx` | Judul "dicuci" per huruf, hitungan angka, parallax cincin, pita film, strip keluar dari sarungnya, frame jatuh, spidol digambar, penghitung frame di pojok |
+| `roll-index.tsx` | Daftar rol; di-hover menampilkan foto sampul di samping kursor |
+| `contact-sheet.tsx` | Strip film per rol (server component) |
+| `frame-fx.tsx` | Jendela bidik: rana, kotak fokus berburu lalu mengunci, tarik fokus, EXIF berputar, foto masuk dari sisi arah panah |
+| `frame-keys.tsx` | ← → Esc, menyimpan arah ke `sessionStorage` |
+| `develop-image.tsx` | Efek cuci foto saat gambar selesai dimuat |
+
+**Pola animasi (penting):**
+- `<html>` dapat class `js`, `motion-ok`, dan `is-intro` dari boot script di `(foto)/layout.tsx` sebelum paint. `foto.css` menyembunyikan state awal hanya di bawah `.motion-ok`, **dan tiap state awal punya keyframe cadangan** (`fx-show`, `fx-vis`, …) supaya halaman tidak pernah kosong kalau JS gagal.
+- Semua animasi di bawah `gsap.matchMedia(MOTION_OK)`. Reduced motion = halaman jadi, tidak ada yang tersembunyi, orbit diam.
+- Jangan beri transform lewat CSS pada elemen yang dianimasikan GSAP dengan `xPercent`/`yPercent` (GSAP menjumlahkannya dengan transform CSS; itulah bug tirai lama).
+- Frame di lembar kontak `visibility:hidden` sampai strip-nya di-scroll ke layar. Di tes Playwright, scroll dulu ke rolnya sebelum mengklik.
+- `<ViewTransition>` React (frame lembar kontak → jendela bidik) tetap dipakai; jangan sembunyikan `opacity` foto di halaman bidik (snapshot transisi akan kosong). Hanya `filter`/`scale` yang dianimasikan.
+- Orbit: posisi kartu ditulis ke `style.transform` lewat JS, jadi jangan beri prop `style` pada kartu. Hover dihitung ulang tiap frame dari posisi pointer terakhir (`elementFromPoint`) karena cincin terus bergerak.
 
 ## 6. Cara menjalankan
 
-Butuh Node.js 22. Semua perintah dijalankan dari **folder utama repo**:
+Node.js 22. Dari folder utama repo:
 
 ```sh
 git fetch origin
 git checkout claude/animation-character-improvements-hyq6p3
-npm ci              # pasang dependensi dua app sekaligus
-npm run dev         # portofolio  → http://127.0.0.1:3000/id/
-npm run dev:photo   # situs foto  → http://127.0.0.1:3002/
+npm ci
+npm run dev    # http://127.0.0.1:3000/id/  dan  http://127.0.0.1:3000/foto/
 ```
 
-Kalau sebelumnya pernah install versi lama (sebelum monorepo), hapus dulu `node_modules` dan `.next` di root.
-
-Pemeriksaan:
+Pemeriksaan (jalankan `npm run typecheck`/`lint`/`build` dari root, sisanya dari `apps/portfolio`):
 
 ```sh
 npm run typecheck && npm run lint && npm run build
 cd apps/portfolio && npm run validate && npm run test:content
-# e2e portofolio: npm run build:preview && npm run start:preview, lalu npm run test:e2e
-# e2e foto:      cd apps/photography && npm run build && npm start, lalu npm run test:e2e
+# e2e: server berjalan di :3000 (dev atau build:preview + start:preview), lalu
+npm run test:e2e        # portfolio.spec.ts + foto.spec.ts, 3 project (desktop, mobile, reduced)
 ```
 
-Catatan: `playwright.config.ts` portofolio memakai `channel: "chrome"`, jadi perlu Google Chrome terpasang. Status terakhir: portofolio 27/27 lolos, situs foto 11/11 lolos.
+`playwright.config.ts` memakai `channel: "chrome"`, jadi Google Chrome harus terpasang.
 
 ## 7. Menambah konten
 
-- **Proyek portofolio:** tambahkan entri di `apps/portfolio/content/projects.json`, lalu cerita di `content/projects/<slug>/id.mdx` dan `en.mdx`, dan gambar di `public/images/projects/`. Detail lengkap ada di `apps/portfolio/README.md`.
-- **Foto:** taruh JPG di `apps/photography/public/photos/<id-rol>/`, lalu tambahkan rol atau frame di `content/rolls.json` (`mark`: `"keep"` / `"reject"`). Hapus rol contoh yang bertanda `"sample": true` beserta foldernya.
-- **Teks:** ikuti panduan "Menulis teks" di `apps/portfolio/README.md`, supaya hasilnya tidak terdengar seperti AI.
+- **Proyek:** entri di `apps/portfolio/content/projects.json`, cerita di `content/projects/<slug>/{id,en}.mdx`, gambar di `public/images/projects/`.
+- **Foto:** JPG di `apps/portfolio/public/photos/<id-rol>/`, lalu rol/frame di `content/foto/rolls.json` (`mark`: `"keep"`/`"reject"`). EXIF dibaca otomatis dari JPG. Hapus rol `"sample": true` beserta foldernya saat foto asli masuk.
+- **Teks:** ikuti "Menulis teks" di `apps/portfolio/README.md`.
 
-## 8. Yang belum selesai (dari audit UX/UI, 2 Nov 2026)
+## 8. Yang belum selesai
 
-Diurutkan dari dampak terbesar per usaha:
+**Dari `/impeccable critique` (3 Nov 2026), diurutkan menurut dampak:**
 
-1. **Cincin fokus situs foto hampir tak terlihat** (WCAG 1.4.11). Kontras amber `#f0b429` di atas kertas hanya 1.56:1. Ganti `:focus-visible` di tema terang ke `--ink` atau amber gelap `#8a5a00`.
-2. **`portfolioUrl` masih localhost** (`apps/photography/content/rolls.json`, `"http://127.0.0.1:3000/id/"`). Isi dengan domain asli, dan tambahkan cek rilis di `build-catalog.ts` yang menolak localhost, `[Nama Kamu]`, dan rol sample.
-3. **Tab bidang di portofolio masih bertuliskan `01 Web ↗`.** Hapus nomor dan panah ↗ (`interests.tsx`).
-4. **Portofolio tidak menautkan Arsip Cahaya.** Menu "Fotografi" masih membuka galeri internal berisi 4 ilustrasi SVG. Tambahkan `photoSiteUrl` di `profile.json` dan arahkan "Lihat galeri" ke sana, atau hapus halaman fotografi internal.
-5. **Halaman proyek: judul lompat dari h1 ke h3.** Ganti judul kartu jadi h2.
-6. **Dua link bernama "Lembar kontak"** di halaman foto menuju tempat berbeda. Ganti label tombol bawahnya.
-7. **Animasi otomatis tanpa tombol jeda** (WCAG 2.2.2): marquee, badge, word rotator, dan orbit. Tambahkan tombol "Jeda animasi" global.
-8. **Tipografi portofolio:** ada 28 ukuran font berbeda dan 62% teks tebal. Rapikan ke sekitar 8 token, dan label minimal 12px.
-9. **Caption kartu hero terpotong di HP** (dekoratif).
+1. **P1, serah-terima dua sisi.** `/foto/` Indonesia saja (`lang="id"` tetap), tautan baliknya selalu ke `/id/` (pengunjung English dikembalikan ke versi Indonesia), tanpa pengalih bahasa, dan tanpa tanda pengenal bersama (✳ / lockup nama) antar kedua sisi.
+2. **P1, hero portofolio dibangun untuk nama 11 huruf.** Stiker `.hero-pill` dan pita `.hero-ribbon` menutupi huruf nama (`[Nama Kamu]`) di 1440px, dan nama asli 20+ huruf akan membungkus. Ekor huruf "g" pada "kadang" terpotong mask SplitText. Dua kartu hero memakai gambar yang sama. Badge berputar terpotong di bawah.
+3. **P2, copy dan label tidak konsisten.** Panah ↗ dipakai di tautan internal; "Karya pilihan · 3 dari 3 proyek" padahal tidak dikurasi; tab bidang masih `01 Web ↗`; "dipilih" / "favorit" / "keep" dipakai bergantian; teks interest generik. Catatan lama: tab bidang di `interests.tsx`.
+4. **P2, aksesibilitas.** Judul proyek di `/projects/` loncat h1→h3 (ganti h2). Landmark `<nav aria-label>` desktop berlabel "Buka menu". Nama tautan bahasa terlalu berisik. Tidak ada tombol jeda animasi otomatis (WCAG 2.2.2). Dua tautan bernama "Lembar kontak" di halaman bidik menuju tempat berbeda.
+5. **P2, mobile Arsip Cahaya.** Nomor tepi film tidak sejajar dengan frame saat grid jadi 2 kolom; petunjuk "← → Esc" tampil di HP; tidak ada geser antar-frame; teks 9–10px (`small.mono`, `.frame-no`).
+6. **P3.** Peringatan LCP Next untuk cover proyek (`priority`); tipografi portofolio ±28 ukuran font; disclaimer "contoh" berulang di tiap kartu/rol; orbit memotong foto lanskap jadi potret.
 
-Yang sudah bagus: kontras teks 0 gagal, cincin fokus portofolio 5.72:1, tidak ada tap target di bawah 24px, satu h1 per halaman, paritas ID/EN identik, semua link 200, console bersih.
+**Sebelum deploy:** isi `profile.json` (nama, email, `siteUrl`, bio tanpa kurung siku), ganti foto contoh dengan foto asli, jangan set `CONTENT_PREVIEW=true` di production. Pertimbangkan cek rilis di `build-foto-catalog.ts` yang menolak rol `sample: true` (belum ada).
 
 ## 9. Deploy (belum dilakukan)
 
-- **Rekomendasi: Vercel** (paket Hobby gratis, untuk penggunaan non-komersial). Buat **dua project** dari repo yang sama:
-  - Root Directory `apps/portfolio`, build command `npm run build:release`
-  - Root Directory `apps/photography`, build command bawaan (`npm run build`)
-- **Domain:**
-  - `.my.id` paling murah (registrar lokal);
-  - `.com` sekitar Rp150–250 ribu per tahun (Cloudflare Registrar menjual sesuai harga modal);
-  - cek harga perpanjangan, bukan hanya promo tahun pertama;
-  - cukup satu domain + subdomain, misalnya `namakamu.com` dan `foto.namakamu.com`.
-- **Sebelum deploy:**
-  - merge branch ke `main` lewat pull request;
-  - isi `profile.json` (nama, email, `siteUrl`, bio tanpa kurung siku);
-  - isi `portfolioUrl`;
-  - ganti foto contoh dengan foto asli;
-  - jangan set `CONTENT_PREVIEW=true` di production.
+- **Rekomendasi: Vercel** (Hobby gratis untuk non-komersial). **Satu project**, Root Directory `apps/portfolio`, build command `npm run build:release`.
+- **Domain:** satu domain cukup (`namakamu.com`); Arsip Cahaya ada di `namakamu.com/foto/`, tidak perlu subdomain. `.my.id` paling murah; `.com` sekitar Rp150–250 ribu per tahun (cek harga perpanjangan).
+- Sebelum deploy: merge branch ke `main` lewat pull request.
 
 ## 10. Hal teknis yang perlu diingat
 
-- **Next.js 16 berbeda dari versi lama.** Baca panduan di `node_modules/next/dist/docs/` sebelum mengubah API Next. Contohnya: middleware sekarang bernama `proxy.ts`, dan `<ViewTransition>` diimpor dari `react`.
-- **`AGENTS.md`** di tiap app dibuat ulang otomatis oleh `next dev`. Biarkan saja, boleh di-commit.
-- **Monorepo:** root Turbopack terdeteksi otomatis dari `package-lock.json` di root. Font sengaja disalin ke `src/fonts` karena `node_modules` di-hoist ke root.
-- **Situs foto:** jangan menambah GSAP. Ringan adalah keputusan desain. Animasi baru sebaiknya CSS atau rAF kecil.
-- **Orbit:** posisi kartu ditulis langsung ke `style.transform` lewat JS, jadi jangan beri prop `style` di elemen kartu dari React. Hover hanya dihitung dari `pointermove` sungguhan supaya cincin tidak bolak-balik.
-- **Portofolio:** inline script di `layout.tsx` memasang class `motion-ok`, `is-preloading`, dan `hero-ready` sebelum paint. Hero disembunyikan lewat CSS sampai intro GSAP mulai, dengan cadangan 4 detik.
-- **Test e2e:**
-  - Test portofolio menunggu animasi intro selesai sebelum axe.
-  - Test orbit menunggu atribut `data-settled` di `.orbit-stage`.
-  - Tombol keyboard halaman foto dipasang lewat `useLayoutEffect`, karena `useEffect` bisa kehilangan tombol yang ditekan tepat saat halaman tampil.
+- **Next.js 16 berbeda dari versi lama.** Baca `node_modules/next/dist/docs/` sebelum mengubah API Next. Contoh: middleware bernama `proxy.ts`, `<ViewTransition>` diimpor dari `react`.
+- **Dua root layout:** tidak ada `src/app/layout.tsx`. Route yang tidak cocok di `/foto/*` ditangani `(foto)/foto/[...rest]` + `(foto)/foto/not-found.tsx`; selain itu `(site)/[locale]/[...rest]`. Matcher `proxy.ts` mengecualikan `foto(?:/|$)`.
+- **`AGENTS.md`** dibuat ulang otomatis oleh `next dev`. Biarkan, boleh di-commit.
+- **Monorepo:** `node_modules` di-hoist ke root; font disalin ke `src/fonts`.
+- **Test e2e:** test portofolio menunggu intro selesai sebelum axe; test foto menunggu `is-intro` hilang dan `opacity` hero 1; test orbit menunggu `data-settled` di `.orbit-stage`. Pada project `reduced`, cincin tidak berputar sendiri (cek gerak dilewati).
+- **Jangan menaruh GSAP di route `(site)` baru lewat `components/foto/gsap.ts`** (itu khusus `/foto/`); portofolio punya registrasinya sendiri di `components/motion.tsx`.

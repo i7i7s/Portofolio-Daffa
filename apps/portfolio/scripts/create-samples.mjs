@@ -24,27 +24,6 @@ write(
     `<rect width="1200" height="850" fill="#e9c8b4"/><g transform="translate(100 115) rotate(2 500 310)"><rect width="1000" height="620" rx="12" fill="#f9f7f2"/><rect width="175" height="620" rx="12" fill="#302e2c"/><text x="28" y="64" font-size="30" font-family="Arial" font-weight="700" fill="#fff">pola /</text><g fill="#99928b"><rect x="28" y="120" width="100" height="8"/><rect x="28" y="160" width="83" height="8"/><rect x="28" y="200" width="110" height="8"/></g><text x="215" y="70" font-size="25" font-family="Arial" font-weight="700" fill="#302e2c">Patterns, in perspective.</text><g fill="#e9e6df"><rect x="215" y="110" width="215" height="100" rx="8"/><rect x="455" y="110" width="215" height="100" rx="8"/><rect x="695" y="110" width="265" height="100" rx="8"/></g><g fill="#a6aca0"><rect x="240" y="140" width="100" height="10"/><rect x="240" y="170" width="145" height="16"/><rect x="480" y="140" width="90" height="10"/><rect x="480" y="170" width="145" height="16"/></g><text x="720" y="169" font-size="19" font-family="monospace" fill="#57534e">SAMPLE DATA</text><path d="M220 530H950M220 460H950M220 390H950M220 320H950" stroke="#dedad1"/><g fill="#db784a"><rect x="250" y="400" width="65" height="130"/><rect x="360" y="350" width="65" height="180"/><rect x="470" y="390" width="65" height="140"/><rect x="580" y="300" width="65" height="230"/><rect x="690" y="330" width="65" height="200"/><rect x="800" y="260" width="65" height="270"/></g><text x="220" y="585" font-family="monospace" font-size="14" fill="#57534e">DATA VISUALIZATION STUDY / 03</text></g>`,
   ),
 );
-const photos = [
-  ["light", "Cahaya & bidang", "Light & planes", "#b7c5c0", "#d8c0a0"],
-  ["quiet", "Jeda di tepian", "A quiet edge", "#b5c9cb", "#e7d5b4"],
-  [
-    "shape",
-    "Percakapan bentuk",
-    "Shapes in conversation",
-    "#cba88e",
-    "#e3d3b7",
-  ],
-  ["blue", "Setelah biru", "After the blue", "#9eafbf", "#d4d4c8"],
-];
-for (const [i, [slug, , , sky, ground]] of photos.entries())
-  write(
-    `public/images/photography/${slug}.svg`,
-    svg(
-      `<defs><linearGradient id="s" x2="0" y2="1"><stop stop-color="${sky}"/><stop offset="1" stop-color="#efebe1"/></linearGradient><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".10"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter></defs><g filter="url(#grain)"><rect width="1000" height="1200" fill="url(#s)"/><circle cx="${720 - i * 110}" cy="250" r="95" fill="#f6eedb"/><path d="M0 ${780 - i * 50}L1000 620V1200H0Z" fill="${ground}"/>${i % 2 === 0 ? '<path d="M170 920V370l340-130v650Z" fill="#e8ddc6"/><path d="M510 240l190 150v520l-190-20Z" fill="#a38c74"/><path d="M510 890l190 20 300 290H820Z" fill="#887e72"/><path d="M265 885V570q0-130 145-140v435Z" fill="#6d776e"/>' : '<path d="M0 800Q300 670 600 790T1000 780V1200H0Z" fill="#6e9395"/><path d="M0 950Q290 760 610 920T1000 900V1200H0Z" fill="#315c65"/><path d="M100 1010Q310 920 540 980" fill="none" stroke="#b8c6bf" stroke-width="4"/>'}</g>`,
-      1000,
-      1200,
-    ),
-  );
 const items = [
   [
     "ruang",
@@ -91,28 +70,6 @@ write(
       tools: [],
       links: {},
       media: [],
-    })),
-    null,
-    2,
-  ),
-);
-write(
-  "content/photography.json",
-  JSON.stringify(
-    photos.map(([slug, id, en], i) => ({
-      id: slug,
-      status: "draft",
-      sample: true,
-      order: i + 1,
-      featured: true,
-      src: `/images/photography/${slug}.svg`,
-      width: 1000,
-      height: 1200,
-      alt: {
-        id: `Ilustrasi geometris contoh: ${id.toLowerCase()}`,
-        en: `Sample geometric illustration: ${en.toLowerCase()}`,
-      },
-      caption: { id, en },
     })),
     null,
     2,

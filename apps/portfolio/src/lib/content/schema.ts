@@ -58,21 +58,17 @@ export const projectSchema = z.object({
     }),
   ),
 });
-export const photoSchema = z.object({
-  id: z.string().regex(/^[a-z0-9-]+$/),
-  status: z.enum(["draft", "published"]),
-  sample: z.boolean().default(false),
-  order: z.number(),
-  featured: z.boolean(),
-  src: asset,
-  width: z.number().positive(),
-  height: z.number().positive(),
-  alt: localized,
-  caption: localized.optional(),
-  album: localized.optional(),
-  location: localized.optional(),
-  year: z.number().int().optional(),
-});
+// What the home page lightbox needs from a photo; they come from the Arsip
+// Cahaya catalog (see lib/foto/catalog.ts).
+export type GalleryPhoto = {
+  id: string;
+  src: string;
+  width: number;
+  height: number;
+  alt: Record<Locale, string>;
+  caption?: Record<Locale, string>;
+  year?: number;
+  sample?: boolean;
+};
 export type Project = z.infer<typeof projectSchema>;
-export type Photo = z.infer<typeof photoSchema>;
 export type Locale = "id" | "en";

@@ -1,15 +1,10 @@
 import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
-import {
-  profileSchema,
-  projectSchema,
-  photoSchema,
-} from "../src/lib/content/schema";
+import { profileSchema, projectSchema } from "../src/lib/content/schema";
 import { serialize } from "next-mdx-remote/serialize";
 const read = (p: string) => JSON.parse(readFileSync(p, "utf8"));
 const profile = profileSchema.parse(read("content/profile.json"));
 const projects = projectSchema.array().parse(read("content/projects.json"));
-const photos = photoSchema.array().parse(read("content/photography.json"));
 const errors: string[] = [];
 if (profile.photo) checkAsset(profile.photo.src);
 function checkAsset(p: string) {
@@ -22,10 +17,6 @@ unique(
   projects.map((p) => p.slug),
   "project slug",
 );
-unique(
-  photos.map((p) => p.id),
-  "photo ID",
-);
 for (const p of projects) {
   checkAsset(p.cover);
   p.media.forEach((m) => checkAsset(m.src));
@@ -36,11 +27,6 @@ for (const p of projects) {
     if (!existsSync(file) || !readFileSync(file, "utf8").trim())
       errors.push(`Missing story: ${file}`);
   }
-}
-for (const p of photos) {
-  checkAsset(p.src);
-  if (p.sample && p.status === "published")
-    errors.push(`Sample cannot be published: ${p.id}`);
 }
 if (profile.cv.startsWith("/") && !existsSync(path.join("public", profile.cv)))
   errors.push("Missing CV");
@@ -79,7 +65,7 @@ Promise.all(
 )
   .then(() =>
     console.log(
-      `Content valid: ${projects.length} projects, ${photos.length} gallery entries, 2 languages, MDX syntax checked. ${process.argv.includes("--release") ? "Release readiness passed." : "Drafts are allowed; release readiness is a separate check."}`,
+      `Content valid: ${projects.length} projects, 2 languages, MDX syntax checked. ${process.argv.includes("--release") ? "Release readiness passed." : "Drafts are allowed; release readiness is a separate check."}`,
     ),
   )
   .catch((error) => {

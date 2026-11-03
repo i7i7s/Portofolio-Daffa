@@ -1,25 +1,26 @@
-# Daffa — portofolio & arsip foto
+# Daffa — portofolio & Arsip Cahaya
 
-Monorepo dengan dua website Next.js yang dideploy terpisah dari repositori yang sama.
+Satu website Next.js dengan dua halaman utama yang sengaja berbeda dunia:
 
-| Website | Folder | Dev lokal | Panduan |
-| --- | --- | --- | --- |
-| Portofolio kreatif (ID/EN, GSAP) | `apps/portfolio` | `npm run dev` → http://127.0.0.1:3000/id/ | [apps/portfolio/README.md](apps/portfolio/README.md) |
-| Arsip Cahaya, website fotografi | `apps/photography` | `npm run dev:photo` → http://127.0.0.1:3002/ | [apps/photography/README.md](apps/photography/README.md) |
+| Alamat | Isi | Panduan |
+| --- | --- | --- |
+| `/id/` dan `/en/` | Portofolio kreatif: proyek, tentang, kontak (ID/EN, GSAP) | [apps/portfolio/README.md](apps/portfolio/README.md) |
+| `/foto/` | Arsip Cahaya: orbit foto 3D, lembar kontak, jendela bidik (Indonesia, GSAP) | bagian "Arsip Cahaya" di panduan yang sama |
 
 ![Pratinjau portofolio](apps/portfolio/qa/desktop-hero.png)
+
+Menu "Fotografi" di portofolio membuka `/foto/`, dan tautan "Portofolio" di Arsip Cahaya kembali ke `/id/`. Keduanya satu deployment, satu domain.
 
 ## Menjalankan
 
 Gunakan Node.js 22 LTS. Dari folder ini:
 
 ```sh
-npm ci            # memasang dependensi kedua website (npm workspaces)
-npm run dev       # portofolio
-npm run dev:photo # website fotografi
+npm ci            # memasang dependensi (npm workspaces)
+npm run dev       # http://127.0.0.1:3000/id/ dan http://127.0.0.1:3000/foto/
 ```
 
-Pemeriksaan untuk kedua website sekaligus:
+Pemeriksaan:
 
 ```sh
 npm run typecheck
@@ -29,7 +30,7 @@ npm run build
 
 ## Deployment
 
-Di Vercel, buat dua project dari repositori ini. Isi **Root Directory** dengan `apps/portfolio` untuk project pertama dan `apps/photography` untuk project kedua. Vercel memasang dependensi dari `package-lock.json` di folder utama secara otomatis. Detail build portofolio (termasuk `build:release`) ada di panduannya.
+Di Vercel, buat satu project dari repositori ini dengan **Root Directory** `apps/portfolio`. Vercel memasang dependensi dari `package-lock.json` di folder utama secara otomatis. Detail build (termasuk `build:release`) ada di panduan portofolio.
 
 ## Dokumen lain
 

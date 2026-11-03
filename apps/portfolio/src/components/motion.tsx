@@ -92,12 +92,33 @@ export function MotionRoot({ children }: { children: ReactNode }) {
     };
   }, []);
   const { contextSafe } = useGSAP({ scope: overlay });
+  // The curtain is two panels that meet in the middle, the ✳ and a label.
+  const wipeParts = () => {
+    const el = overlay.current!;
+    return [...el.querySelectorAll(".wipe-panel, .wipe-mark, .wipe-label")];
+  };
+  const closeWipe = () => {
+    const el = overlay.current!;
+    gsap.set(el.querySelector(".wipe-l"), { xPercent: -101 });
+    gsap.set(el.querySelector(".wipe-r"), { xPercent: 101 });
+    gsap.set(el.querySelectorAll(".wipe-mark, .wipe-label"), { autoAlpha: 0 });
+    gsap.set(el, { visibility: "hidden" });
+  };
+  // While the curtain is down the next page holds its entrance, which then
+  // plays as the curtain opens instead of behind it.
+  const endWipe = () => {
+    const html = document.documentElement;
+    if (!html.classList.contains("is-wiping")) return;
+    html.classList.remove("is-wiping");
+    document.dispatchEvent(new Event("portfolio:intro"));
+  };
   useEffect(() => {
     const recover = contextSafe(() => {
       pending.current = false;
-      gsap.killTweensOf(overlay.current);
-      gsap.set(overlay.current, { yPercent: 100, visibility: "hidden" });
+      gsap.killTweensOf(wipeParts());
+      closeWipe();
       if (timer.current) clearTimeout(timer.current);
+      endWipe();
     });
     const click = contextSafe((event: MouseEvent) => {
       const a = (event.target as Element).closest<HTMLAnchorElement>("a[href]");
@@ -125,25 +146,54 @@ export function MotionRoot({ children }: { children: ReactNode }) {
       event.preventDefault();
       pending.current = true;
       if (timer.current) clearTimeout(timer.current);
-      gsap.killTweensOf(overlay.current);
+      gsap.killTweensOf(wipeParts());
       const language =
         url.pathname.split("/")[1] !== location.pathname.split("/")[1];
-      const duration = language ? motion.language : motion.wipe;
-      gsap.fromTo(
-        overlay.current,
-        { yPercent: -100, visibility: "visible" },
-        {
-          yPercent: 0,
-          duration,
-          ease: "power4.inOut",
+      const cover = language ? motion.wipeLanguage : motion.wipeIn;
+      const el = overlay.current!;
+      const label = a.dataset.wipeLabel ?? a.textContent ?? "";
+      el.querySelector(".wipe-label")!.textContent = language
+        ? ""
+        : label
+            .replace(/[↗→←↑↓]/g, "")
+            .trim()
+            .slice(0, 28);
+      document.documentElement.classList.add("is-wiping");
+      gsap.set(el, { visibility: "visible" });
+      gsap
+        .timeline({
           onComplete: () => router.push(url.pathname + url.search + url.hash),
-        },
-      );
-      gsap.fromTo(
-        overlay.current!.querySelector("span"),
-        { rotation: -180, scale: 0.3 },
-        { rotation: 0, scale: 1, duration: duration + 0.2, ease: motion.expo },
-      );
+        })
+        .fromTo(
+          el.querySelector(".wipe-l"),
+          { xPercent: -101 },
+          { xPercent: 0, duration: cover, ease: motion.curtain },
+          0,
+        )
+        .fromTo(
+          el.querySelector(".wipe-r"),
+          { xPercent: 101 },
+          { xPercent: 0, duration: cover, ease: motion.curtain },
+          0,
+        )
+        .fromTo(
+          el.querySelector(".wipe-mark"),
+          { rotation: -180, scale: 0.3, autoAlpha: 0 },
+          {
+            rotation: 0,
+            scale: 1,
+            autoAlpha: 1,
+            duration: cover,
+            ease: motion.expo,
+          },
+          cover * 0.15,
+        )
+        .fromTo(
+          el.querySelector(".wipe-label"),
+          { y: 18, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 0.4, ease: motion.ease },
+          cover * 0.55,
+        );
       timer.current = setTimeout(recover, 2500);
     });
     document.addEventListener("click", click, true);
@@ -166,15 +216,27 @@ export function MotionRoot({ children }: { children: ReactNode }) {
       if (pending.current) {
         pending.current = false;
         if (timer.current) clearTimeout(timer.current);
-        gsap.to(overlay.current, {
-          yPercent: 100,
-          duration: minimal() ? 0 : motion.wipe,
-          ease: "power4.inOut",
-          overwrite: true,
-          onComplete: () => {
-            gsap.set(overlay.current, { visibility: "hidden" });
-          },
-        });
+        const el = overlay.current!;
+        const open = motion.wipeOut;
+        gsap.killTweensOf(wipeParts());
+        gsap
+          .timeline({ onComplete: closeWipe })
+          .to(
+            el.querySelectorAll(".wipe-mark, .wipe-label"),
+            { autoAlpha: 0, duration: 0.3, ease: "power2.in" },
+            motion.wipeHold,
+          )
+          .to(
+            el.querySelector(".wipe-l"),
+            { xPercent: -101, duration: open, ease: motion.curtain },
+            motion.wipeHold + 0.1,
+          )
+          .to(
+            el.querySelector(".wipe-r"),
+            { xPercent: 101, duration: open, ease: motion.curtain },
+            motion.wipeHold + 0.1,
+          )
+          .call(endWipe, [], motion.wipeHold + 0.1 + open * 0.35);
       }
       ScrollTrigger.refresh();
     },
@@ -187,7 +249,10 @@ export function MotionRoot({ children }: { children: ReactNode }) {
       <Cursor />
       <Preloader />
       <div ref={overlay} className="page-wipe" aria-hidden="true">
-        <span>✳</span>
+        <i className="wipe-panel wipe-l" />
+        <i className="wipe-panel wipe-r" />
+        <span className="wipe-mark">✳</span>
+        <b className="wipe-label mono" />
       </div>
     </>
   );
@@ -298,7 +363,11 @@ export function Choreography({
               document.documentElement.classList.add("hero-ready");
               intro.play();
             };
-            if (document.documentElement.classList.contains("is-preloading")) {
+            const html = document.documentElement;
+            if (
+              html.classList.contains("is-preloading") ||
+              html.classList.contains("is-wiping")
+            ) {
               document.addEventListener("portfolio:intro", start, {
                 once: true,
               });
