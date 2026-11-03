@@ -35,7 +35,7 @@
   "aboutTitle": "Mostly behind a laptop,\nsometimes behind a camera.",
   "aboutLabel": "About me",
   "interests": "What I’m learning",
-  "interestsIntro": "Pick one to see what I do there.",
+  "interestsIntro": "Four areas I am digging into. Pick one to read the short version.",
   "webDesc": "Pages that load fast and work well on a phone.",
   "uiuxDesc": "Sorting out the flow before drawing screens. Once the flow is clear, the design gets easier.",
   "dataDesc": "Turning tables into charts that people who aren’t analysts can read.",
@@ -90,5 +90,8 @@
   "galleryWord": "Gallery",
   "contactMarquee": "Write me an email",
   "selectedCount": "{shown} of {total} projects",
-  "projectCount": "{count} projects"
+  "projectCount": "{count} projects",
+  "mainNav": "Main navigation",
+  "pauseMotion": "Pause animations",
+  "resumeMotion": "Resume animations"
 }

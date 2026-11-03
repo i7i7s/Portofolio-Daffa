@@ -130,16 +130,17 @@ npm run test:e2e        # portfolio.spec.ts + foto.spec.ts, 3 project (desktop, 
 
 ## 8. Yang belum selesai
 
-**Dari `/impeccable critique` (3 Nov 2026), diurutkan menurut dampak:**
+Audit `/impeccable critique` (3 Nov 2026, skor 22/32) sudah dikerjakan di commit berikutnya: serah-terima bahasa dan tanda pengenal bersama (✳) antar dua sisi, tirai penutup saat keluar dari `/foto/`, hero portofolio (stiker tidak menutupi nama, ukuran nama aman untuk nama panjang, ekor huruf tidak terpotong, kartu hero tidak lagi satu gambar), panah ↗ hanya untuk tautan keluar, satu istilah "pilihan" untuk foto terpilih, judul h2 di `/projects/`, label nav, tombol "Jeda animasi" di kedua sisi, geser antar-frame dan nomor tepi film yang tidak salah sejajar di HP, teks minimal 11px.
 
-1. **P1, serah-terima dua sisi.** `/foto/` Indonesia saja (`lang="id"` tetap), tautan baliknya selalu ke `/id/` (pengunjung English dikembalikan ke versi Indonesia), tanpa pengalih bahasa, dan tanpa tanda pengenal bersama (✳ / lockup nama) antar kedua sisi.
-2. **P1, hero portofolio dibangun untuk nama 11 huruf.** Stiker `.hero-pill` dan pita `.hero-ribbon` menutupi huruf nama (`[Nama Kamu]`) di 1440px, dan nama asli 20+ huruf akan membungkus. Ekor huruf "g" pada "kadang" terpotong mask SplitText. Dua kartu hero memakai gambar yang sama. Badge berputar terpotong di bawah.
-3. **P2, copy dan label tidak konsisten.** Panah ↗ dipakai di tautan internal; "Karya pilihan · 3 dari 3 proyek" padahal tidak dikurasi; tab bidang masih `01 Web ↗`; "dipilih" / "favorit" / "keep" dipakai bergantian; teks interest generik. Catatan lama: tab bidang di `interests.tsx`.
-4. **P2, aksesibilitas.** Judul proyek di `/projects/` loncat h1→h3 (ganti h2). Landmark `<nav aria-label>` desktop berlabel "Buka menu". Nama tautan bahasa terlalu berisik. Tidak ada tombol jeda animasi otomatis (WCAG 2.2.2). Dua tautan bernama "Lembar kontak" di halaman bidik menuju tempat berbeda.
-5. **P2, mobile Arsip Cahaya.** Nomor tepi film tidak sejajar dengan frame saat grid jadi 2 kolom; petunjuk "← → Esc" tampil di HP; tidak ada geser antar-frame; teks 9–10px (`small.mono`, `.frame-no`).
-6. **P3.** Peringatan LCP Next untuk cover proyek (`priority`); tipografi portofolio ±28 ukuran font; disclaimer "contoh" berulang di tiap kartu/rol; orbit memotong foto lanskap jadi potret.
+Yang masih terbuka:
 
-**Sebelum deploy:** isi `profile.json` (nama, email, `siteUrl`, bio tanpa kurung siku), ganti foto contoh dengan foto asli, jangan set `CONTENT_PREVIEW=true` di production. Pertimbangkan cek rilis di `build-foto-catalog.ts` yang menolak rol `sample: true` (belum ada).
+1. **`/foto/` hanya Indonesia.** Tautan balik mengikuti bahasa (cookie `NEXT_LOCALE` yang ditulis header portofolio), tapi teks `/foto/` sendiri belum punya versi English.
+2. **Orbit memotong foto lanskap jadi potret** (kartu 4:5), sementara jendela bidik menampilkannya 3:2.
+3. **Tipografi portofolio** masih ±28 ukuran font; disclaimer "contoh" berulang di tiap kartu/rol; peringatan LCP Next untuk cover proyek (`priority`).
+4. **Badge berputar di hero** masih terpotong di tepi bawah pada layar tertentu.
+5. Pertimbangkan cek rilis di `build-foto-catalog.ts` yang menolak rol `sample: true` (belum ada).
+
+**Sebelum deploy:** isi `profile.json` (nama, email, `siteUrl`, bio tanpa kurung siku), ganti foto contoh dengan foto asli, jangan set `CONTENT_PREVIEW=true` di production.
 
 ## 9. Deploy (belum dilakukan)
 

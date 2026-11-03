@@ -135,6 +135,9 @@ img {
   color: var(--muted);
   font-weight: 400;
 }
+.brand-star {
+  color: var(--pencil);
+}
 .aperture {
   width: 20px;
   height: 20px;
@@ -399,7 +402,7 @@ html:not(.js) .orbit {
   justify-content: space-between;
   gap: 8px;
   color: var(--edge);
-  font-size: 10.5px;
+  font-size: 11px;
   padding: 2px 4px 8px;
   white-space: nowrap;
   overflow: hidden;
@@ -443,7 +446,7 @@ html:not(.js) .orbit {
   position: absolute;
   left: 6px;
   bottom: 4px;
-  font-size: 10px;
+  font-size: 11px;
   color: #fff;
   text-shadow: 0 1px 2px #000;
 }
@@ -863,7 +866,8 @@ html:not(.js) .orbit {
   pointer-events: none;
   --r: 0px;
 }
-.is-intro .fx-iris {
+.is-intro .fx-iris,
+.is-leaving .fx-iris {
   display: block;
 }
 .fx-iris::before {
@@ -969,7 +973,7 @@ html:not(.js) .orbit {
   left: 50%;
   top: 100%;
   translate: -50% 8px;
-  font-size: 10px;
+  font-size: 11px;
   white-space: nowrap;
 }
 @media (hover: none) {
@@ -1056,6 +1060,31 @@ html:not(.js) .orbit {
   animation: fx-show 0s 4s forwards;
 }
 
+/* Pause button for the animations that run on their own. */
+.motion-toggle {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 75;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+.motion-paused *,
+.motion-paused *::before,
+.motion-paused *::after {
+  animation-play-state: paused !important;
+}
+@media (hover: none) {
+  .keys {
+    display: none;
+  }
+}
+
 @media (max-width: 900px) {
   .vf-page {
     grid-template-columns: 1fr;
@@ -1067,8 +1096,14 @@ html:not(.js) .orbit {
   .frames {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .edge span:nth-child(n + 5) {
+  .edge span:nth-child(n + 2) {
     display: none;
+  }
+  .edge:last-child {
+    display: none;
+  }
+  .strip {
+    padding-bottom: 26px;
   }
 }
 @media (max-width: 700px) {
@@ -1104,6 +1139,9 @@ html:not(.js) .orbit {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+  .motion-toggle {
+    display: none;
   }
   .js .develop:not(.is-done) img {
     filter: none;

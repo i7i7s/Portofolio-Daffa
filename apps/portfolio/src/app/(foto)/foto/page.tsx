@@ -55,7 +55,7 @@ export default function Home() {
           <span>
             <b data-count={rolls.length}>{rolls.length}</b> rol ·{" "}
             <b data-count={frames}>{frames}</b> frame ·{" "}
-            <b data-count={keeps}>{keeps}</b> dipilih
+            <b data-count={keeps}>{keeps}</b> pilihan
           </span>
         </p>
       </section>

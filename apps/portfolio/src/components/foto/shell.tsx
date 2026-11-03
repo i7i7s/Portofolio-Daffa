@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { gsap, useGSAP, MOTION_OK, INTRO_DONE } from "./gsap";
 
 const INTRO_KEY = "foto-intro";
@@ -11,6 +11,7 @@ export function FotoShell({ title }: { title: string }) {
   const label = useRef<HTMLSpanElement>(null);
   const reticle = useRef<HTMLDivElement>(null);
   const tag = useRef<HTMLSpanElement>(null);
+  const [paused, setPaused] = useState(false);
 
   useGSAP(() => {
     const html = document.documentElement;
@@ -61,6 +62,57 @@ export function FotoShell({ title }: { title: string }) {
         // an interrupted intro must still release the page
         done();
         window.dispatchEvent(new Event(INTRO_DONE));
+      };
+    });
+
+    // Leaving for the portfolio closes the shutter, the way the portfolio's
+    // own curtain closes over its pages.
+    mm.add(MOTION_OK, () => {
+      const el = iris.current;
+      if (!el) return;
+      const onClick = (e: MouseEvent) => {
+        const a = (e.target as Element).closest<HTMLAnchorElement>("a[href]");
+        if (
+          !a ||
+          e.defaultPrevented ||
+          e.button !== 0 ||
+          e.metaKey ||
+          e.ctrlKey ||
+          e.shiftKey ||
+          e.altKey ||
+          document.documentElement.classList.contains("motion-paused")
+        )
+          return;
+        const url = new URL(a.href, location.href);
+        if (
+          url.origin !== location.origin ||
+          !/^\/(id|en)\//.test(url.pathname)
+        )
+          return;
+        e.preventDefault();
+        const radius = Math.hypot(innerWidth, innerHeight) / 2 + 40;
+        document.documentElement.classList.add("is-leaving");
+        gsap.set(label.current, { autoAlpha: 0 });
+        gsap.fromTo(
+          el,
+          { "--r": `${radius}px` },
+          {
+            "--r": "0px",
+            duration: 0.7,
+            ease: "power3.inOut",
+            onComplete: () => location.assign(url.href),
+          },
+        );
+      };
+      const reset = () => {
+        gsap.killTweensOf(el);
+        document.documentElement.classList.remove("is-leaving");
+      };
+      document.addEventListener("click", onClick);
+      window.addEventListener("pageshow", reset);
+      return () => {
+        document.removeEventListener("click", onClick);
+        window.removeEventListener("pageshow", reset);
       };
     });
 
@@ -115,6 +167,19 @@ export function FotoShell({ title }: { title: string }) {
           {title}
         </span>
       </div>
+      <button
+        type="button"
+        className="motion-toggle mono"
+        aria-pressed={paused}
+        onClick={() => {
+          const next = !paused;
+          setPaused(next);
+          document.documentElement.classList.toggle("motion-paused", next);
+          gsap.globalTimeline.paused(next);
+        }}
+      >
+        {paused ? "Lanjutkan animasi" : "Jeda animasi"}
+      </button>
       <div
         className="fx-reticle"
         ref={reticle}

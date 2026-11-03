@@ -199,7 +199,7 @@ button:hover {
 }
 .wordmark small {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.03em;
   margin-top: 4px;
@@ -337,7 +337,7 @@ button:hover {
   justify-content: space-between;
   padding: 22px 0;
   border-top: 1px solid var(--line);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted);
 }
 .section {
@@ -375,7 +375,7 @@ button:hover {
   font-size: 15px;
 }
 .selected-layout aside .aside-note {
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.8;
 }
 .project-grid {
@@ -423,14 +423,14 @@ button:hover {
   padding: 12px 0;
 }
 .project-caption .eyebrow {
-  font-size: 10px;
+  font-size: 11px;
   margin-bottom: 8px;
 }
 .project-number {
   font-size: 12px;
   padding-top: 2px;
 }
-.project-caption h3 {
+.project-caption :is(h2, h3) {
   font-size: 22px;
   line-height: 1.25;
   letter-spacing: -0.04em;
@@ -514,9 +514,6 @@ button:hover {
 }
 .interest-list button:first-child {
   border-top: 1px solid var(--line);
-}
-.interest-list button > span:last-child {
-  margin-left: auto;
 }
 .interest-list button[aria-selected="true"] {
   color: var(--ink);
@@ -1157,7 +1154,7 @@ dialog::backdrop {
     font-size: 15px;
   }
   .wordmark small {
-    font-size: 9px;
+    font-size: 11px;
   }
   .brand-mark {
     font-size: 33px;
@@ -1178,14 +1175,14 @@ dialog::backdrop {
   }
   .preview-bar {
     justify-content: flex-start;
-    font-size: 9px;
+    font-size: 11px;
     padding-top: 11px;
   }
   .hero {
     padding-top: 25px;
   }
   .edition-row {
-    font-size: 9px;
+    font-size: 11px;
     gap: 25px;
     line-height: 1.6;
   }
@@ -1233,7 +1230,7 @@ dialog::backdrop {
   }
   .hero-bottom {
     padding: 15px 0;
-    font-size: 9px;
+    font-size: 11px;
   }
   .section {
     padding-top: 55px;
@@ -1277,7 +1274,7 @@ dialog::backdrop {
     grid-template-columns: 24px 1fr 24px;
     gap: 7px;
   }
-  .project-caption h3,
+  .project-caption :is(h2, h3),
   .selected-grid > div:first-child h3 {
     font-size: 24px;
   }
@@ -1291,7 +1288,7 @@ dialog::backdrop {
     margin-bottom: 12px;
   }
   .media-label {
-    font-size: 9px;
+    font-size: 11px;
     left: 10px;
     bottom: 10px;
   }
@@ -1402,7 +1399,7 @@ dialog::backdrop {
     align-items: flex-start;
   }
   .photo-grid figcaption .mono {
-    font-size: 10px;
+    font-size: 11px;
   }
   .photo-open {
     width: 35px;
@@ -1454,7 +1451,7 @@ dialog::backdrop {
     text-align: left;
   }
   .site-footer small {
-    font-size: 9px;
+    font-size: 11px;
   }
   .page-intro {
     padding: 40px 0 35px;
@@ -1629,7 +1626,7 @@ dialog::backdrop {
   .photo-intro > p {
     font-size: 14px;
   }
-  .project-caption h3 {
+  .project-caption :is(h2, h3) {
     font-size: 22px;
   }
 }
@@ -1688,16 +1685,16 @@ dialog::backdrop {
 @media (max-width: 767px) {
   .hero-bottom,
   .edition-row {
-    font-size: 10px;
+    font-size: 11px;
   }
   .preview-bar {
-    font-size: 10px;
+    font-size: 11px;
   }
   .section-heading > .text-link {
     font-size: 14px;
   }
   .photo-grid .media-label {
-    font-size: 10px;
+    font-size: 11px;
   }
   .photo-grid figcaption {
     font-size: 12px;
@@ -1978,10 +1975,14 @@ dialog::backdrop {
   position: relative;
 }
 .hero-name-row {
-  padding-top: 34px;
+  padding-top: clamp(64px, 7vw, 110px);
+}
+[data-intro-title] {
+  line-height: 1.14;
 }
 .hero-name-row h1 {
-  font-size: clamp(64px, 13vw, 215px);
+  font-size: clamp(48px, 9.5vw, 160px);
+  text-wrap: balance;
   line-height: 1;
   letter-spacing: -0.075em;
   max-width: none;
@@ -1989,7 +1990,7 @@ dialog::backdrop {
 }
 .hero-pill {
   position: absolute;
-  top: 17%;
+  top: 22px;
   right: 4%;
   z-index: 3;
 }
@@ -2019,7 +2020,7 @@ dialog::backdrop {
 .hero-ribbon {
   position: absolute;
   left: 22%;
-  bottom: 2%;
+  bottom: -22px;
   z-index: 3;
   padding: 7px 22px;
   border-radius: 6px;
@@ -2126,7 +2127,7 @@ dialog::backdrop {
   display: block;
   margin: 7px 6px 2px;
   overflow: hidden;
-  font-size: 10px;
+  font-size: 11px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -2391,8 +2392,11 @@ dialog::backdrop {
     font-size: clamp(44px, 12.5vw, 90px);
     line-height: 1.02;
   }
+  .hero-name-row {
+    padding-top: 64px;
+  }
   .hero-pill {
-    top: 18px;
+    top: 10px;
     right: 0;
   }
   .hero-pill > span {
@@ -2408,7 +2412,7 @@ dialog::backdrop {
     left: auto;
     right: 4%;
     bottom: -14px;
-    font-size: 10px;
+    font-size: 11px;
     padding: 5px 12px;
   }
   .name-spark {
@@ -2455,7 +2459,7 @@ dialog::backdrop {
     border-radius: 11px;
   }
   .stack-inner small {
-    font-size: 9px;
+    font-size: 11px;
   }
   .hero-badge {
     left: -2%;
@@ -2531,5 +2535,30 @@ dialog::backdrop {
   .display-heading,
   .contact-section .display-heading {
     font-size: 36px;
+  }
+}
+
+/* Global pause for the animations that run on their own. */
+.motion-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 80;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 12px;
+}
+.motion-paused *,
+.motion-paused *::before,
+.motion-paused *::after {
+  animation-play-state: paused !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-toggle {
+    display: none;
   }
 }

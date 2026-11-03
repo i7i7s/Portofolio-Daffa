@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/header";
+import { PauseMotion } from "@/components/pause-motion";
 import { profile, preview } from "@/lib/content";
 export default async function LocaleLayout({
   children,
@@ -27,6 +28,7 @@ export default async function LocaleLayout({
       <a className="skip-link" href="#main">
         {t("skip")}
       </a>
+      <PauseMotion />
       <div className="site-shell">
         <Header name={profile.name} />
         {preview && (

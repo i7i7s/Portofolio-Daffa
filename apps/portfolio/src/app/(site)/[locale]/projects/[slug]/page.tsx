@@ -148,7 +148,7 @@ export default async function ProjectDetail({
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {t(label)} ↗
+                  {t(label)}
                 </a>
               ))}
             </div>

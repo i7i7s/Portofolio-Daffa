@@ -18,10 +18,12 @@ export function ProjectCard({
   project: p,
   index = 0,
   category = "all",
+  as: Heading = "h3",
 }: {
   project: Project;
   index?: number;
   category?: string;
+  as?: "h2" | "h3";
 }) {
   const locale = useLocale() as Locale;
   const t = useTranslations();
@@ -126,11 +128,11 @@ export function ProjectCard({
             <p className="eyebrow">
               {p.categories.map((c) => t(c)).join(" / ")}
             </p>
-            <h3>{p.title[locale]}</h3>
+            <Heading>{p.title[locale]}</Heading>
             <p className="project-summary">{p.summary[locale]}</p>
           </div>
           <span className="project-arrow" aria-hidden="true">
-            ↗
+            →
           </span>
         </div>
       </Link>
@@ -217,7 +219,13 @@ export function ProjectIndex({ projects }: { projects: Project[] }) {
       </div>
       <div className="project-grid index-grid">
         {shown.map((p, i) => (
-          <ProjectCard project={p} index={i} key={p.slug} category={category} />
+          <ProjectCard
+            project={p}
+            index={i}
+            key={p.slug}
+            category={category}
+            as="h2"
+          />
         ))}
       </div>
       {!shown.length && (

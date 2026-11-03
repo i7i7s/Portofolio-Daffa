@@ -93,9 +93,7 @@ export function Interests() {
               }
             }}
           >
-            <span className="mono">0{i + 1}</span>
             <span>{t(f)}</span>
-            <span aria-hidden="true">↗</span>
           </button>
         ))}
       </div>

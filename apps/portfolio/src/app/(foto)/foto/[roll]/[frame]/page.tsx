@@ -104,7 +104,7 @@ export default async function FramePage({ params }: Params) {
           <h1>{frame.caption}</h1>
           <p>
             {roll.place} · {roll.year}
-            {frame.mark === "keep" && <span className="tag keep">Dipilih</span>}
+            {frame.mark === "keep" && <span className="tag keep">Pilihan</span>}
             {frame.mark === "reject" && (
               <span className="tag reject">Dicoret</span>
             )}
@@ -142,7 +142,7 @@ export default async function FramePage({ params }: Params) {
             <span />
           )}
           <Link href={back} className="to-sheet">
-            Lembar kontak
+            Kembali ke rol
           </Link>
           {next ? (
             <Link href={frameHref(roll.id, next.slug)} data-dir="1">

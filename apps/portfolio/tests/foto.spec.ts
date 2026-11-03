@@ -8,7 +8,7 @@ test("contact sheet frame opens the viewfinder and keys step through", async ({
   // frames stay hidden until their strip is scrolled to, so go there first
   await page.locator("#kota-hujan").scrollIntoViewIfNeeded();
   await page
-    .getByRole("link", { name: /Frame 02: Genangan di perempatan \(dipilih\)/ })
+    .getByRole("link", { name: /Frame 02: Genangan di perempatan \((pilihan)\)/ })
     .click();
   await expect(page).toHaveURL(/\/foto\/kota-hujan\/02\/$/);
   await expect(page.locator("h1")).toHaveText("Genangan di perempatan");

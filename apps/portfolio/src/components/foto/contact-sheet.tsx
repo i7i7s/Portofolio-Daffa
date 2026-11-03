@@ -32,7 +32,7 @@ function Mark({ kind }: { kind: Frame["mark"] }) {
   );
 }
 
-const markLabel = { keep: " (dipilih)", reject: " (dicoret)" };
+const markLabel = { keep: " (pilihan)", reject: " (dicoret)" };
 
 export function ContactSheet({ roll, number }: { roll: Roll; number: string }) {
   const strips = Array.from(
@@ -49,7 +49,7 @@ export function ContactSheet({ roll, number }: { roll: Roll; number: string }) {
         <h3 id={`${roll.id}-t`}>{roll.title}</h3>
         <p className="roll-meta">
           {roll.place} · {roll.year} · {roll.frames.length} frame · {keeps}{" "}
-          dipilih
+          pilihan
         </p>
         {roll.sample && (
           <p className="sample mono">Contoh · ilustrasi, bukan foto asli</p>

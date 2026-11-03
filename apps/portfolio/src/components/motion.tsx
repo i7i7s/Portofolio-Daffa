@@ -142,7 +142,11 @@ export function MotionRoot({ children }: { children: ReactNode }) {
         url.search = location.search;
         url.hash = location.hash;
       }
-      if (minimal()) return;
+      if (
+        minimal() ||
+        document.documentElement.classList.contains("motion-paused")
+      )
+        return;
       event.preventDefault();
       pending.current = true;
       if (timer.current) clearTimeout(timer.current);

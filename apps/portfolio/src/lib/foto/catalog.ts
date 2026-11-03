@@ -68,8 +68,18 @@ export const allFrames = rolls.flatMap((r) =>
 );
 export type LineFrame = (typeof allFrames)[number];
 
-// Frames for the portfolio home page: the ones marked "keep" first.
-export const teaserFrames = (n: number) =>
-  [...allFrames]
-    .sort((a, b) => Number(b.mark === "keep") - Number(a.mark === "keep"))
-    .slice(0, n);
+// Frames for the portfolio home page: one favourite per roll first, so the
+// cards do not repeat the same scene, then any other keeps.
+export const teaserFrames = (n: number) => {
+  const firsts = rolls
+    .map(
+      (r) =>
+        allFrames.find((f) => f.roll === r.id && f.mark === "keep") ??
+        allFrames.find((f) => f.roll === r.id),
+    )
+    .filter((f) => f !== undefined);
+  const rest = allFrames.filter(
+    (f) => f.mark === "keep" && !firsts.includes(f),
+  );
+  return [...firsts, ...rest].slice(0, n);
+};

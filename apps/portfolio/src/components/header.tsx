@@ -45,6 +45,7 @@ export function Header({ name }: { name: string }) {
   }, [path]);
   useEffect(() => {
     document.documentElement.lang = locale;
+    document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000; samesite=lax`;
   }, [locale]);
   const links = [
     ["work", `/${locale}/projects/`],
@@ -99,13 +100,15 @@ export function Header({ name }: { name: string }) {
           <small>{t("portfolio")}</small>
         </span>
       </Link>
-      <nav className="desktop-nav" aria-label={t("menu")}>
+      <nav className="desktop-nav" aria-label={t("mainNav")}>
         {links.map(([label, href]) => (
           <Link
             key={label}
             href={href}
             className={
-              (path.includes('/projects') ? label==='work' : active===label) ? "active" : ""
+              (path.includes("/projects") ? label === "work" : active === label)
+                ? "active"
+                : ""
             }
           >
             {t(label)}
@@ -117,7 +120,7 @@ export function Header({ name }: { name: string }) {
           href={target}
           hrefLang={other}
           className="language"
-          aria-label={`ID / EN: ${t("language")}`}
+          aria-label={t("language")}
           onClick={(e) => {
             if (
               e.defaultPrevented ||
@@ -169,7 +172,7 @@ export function Header({ name }: { name: string }) {
           {links.map(([label, href], i) => (
             <Link key={label} href={href} onClick={close}>
               <small>0{i + 1}</small>
-              {t(label)} ↗
+              {t(label)}
             </Link>
           ))}
         </nav>

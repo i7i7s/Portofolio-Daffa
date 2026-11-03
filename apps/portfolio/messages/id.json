@@ -35,7 +35,7 @@
   "aboutTitle": "Lebih sering di depan laptop,\nsesekali di balik kamera.",
   "aboutLabel": "Tentang saya",
   "interests": "Yang sedang saya pelajari",
-  "interestsIntro": "Pilih satu untuk lihat apa yang saya kerjakan di situ.",
+  "interestsIntro": "Empat bidang yang sedang saya dalami. Pilih satu untuk membaca ringkasannya.",
   "webDesc": "Halaman yang cepat dibuka dan enak dipakai di HP.",
   "uiuxDesc": "Merapikan alur dulu, baru menggambar layar. Kalau alurnya jelas, desainnya ikut gampang.",
   "dataDesc": "Mengubah tabel jadi grafik yang bisa dibaca orang yang bukan analis.",
@@ -90,5 +90,8 @@
   "galleryWord": "Galeri",
   "contactMarquee": "Tulis email",
   "selectedCount": "{shown} dari {total} proyek",
-  "projectCount": "{count} proyek"
+  "projectCount": "{count} proyek",
+  "mainNav": "Navigasi utama",
+  "pauseMotion": "Jeda animasi",
+  "resumeMotion": "Lanjutkan animasi"
 }

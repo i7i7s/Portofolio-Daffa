@@ -12,7 +12,7 @@ export default async function NotFound() {
       <h1>{t("notFound")}</h1>
       <p>{t("notFoundText")}</p>
       <Link href={`/${locale}/`} className="button primary">
-        {t("home")} ↗
+        {t("home")}
       </Link>
     </main>
   );

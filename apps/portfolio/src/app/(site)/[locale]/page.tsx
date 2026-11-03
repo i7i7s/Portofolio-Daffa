@@ -107,7 +107,6 @@ export default async function Home({
                     href={`/${locale}/projects/`}
                   >
                     {t("viewWork")}
-                    <span>↗</span>
                   </Link>
                 </Magnetic>
               </div>
@@ -177,7 +176,7 @@ export default async function Home({
               <span className="orange-dot">.</span>
             </h2>
             <Link href={`/${locale}/projects/`} className="text-link">
-              {t("allProjects")} ↗
+              {t("allProjects")}
             </Link>
           </div>
           <div className="selected-layout">
@@ -188,12 +187,14 @@ export default async function Home({
                 text={`${t("selected")} ✳ ${t("selected")} ✳ `}
                 center="✳"
               />
-              <p className="mono aside-note">
-                {t("selectedCount", {
-                  shown: selected.length,
-                  total: projects.length,
-                })}
-              </p>
+              {projects.length > selected.length && (
+                <p className="mono aside-note">
+                  {t("selectedCount", {
+                    shown: selected.length,
+                    total: projects.length,
+                  })}
+                </p>
+              )}
             </aside>
             <div className="selected-wrap">
               <div className="project-grid selected-grid" data-track>
@@ -280,7 +281,7 @@ export default async function Home({
             <p className="eyebrow">{t("photography")}</p>
             <h2 data-split>{t("photoTitle")}</h2>
             <Link className="text-link" href="/foto/">
-              {t("openGallery")} ↗
+              {t("openGallery")}
             </Link>
           </div>
           <div className="photo-intro">
@@ -308,7 +309,7 @@ export default async function Home({
           <p className="eyebrow">{t("contact")}</p>
           <h2 className="display-heading" data-split>
             {lines(t("contactTitle"))}
-            <span className="orange-dot">↗</span>
+            <span className="orange-dot">.</span>
           </h2>
           <Marquee
             className="tape tape-accent contact-tape"

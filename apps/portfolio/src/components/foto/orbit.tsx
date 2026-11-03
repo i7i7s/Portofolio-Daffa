@@ -171,7 +171,7 @@ export function Orbit({
       const instant = reduce.matches;
 
       if (st.spawn < 1 && !st.hold) {
-        st.spawn = instant ? 1 : Math.min(1, st.spawn + dt / 1.6);
+        st.spawn = instant ? 1 : Math.min(1, st.spawn + dt / 1.0);
         if (st.spawn === 1) stage.dataset.settled = "true";
       }
 
@@ -193,7 +193,9 @@ export function Orbit({
         st.amt[i] += ((st.hover === i ? 1 : 0) - st.amt[i]) * k;
 
       if (!st.drag) {
-        const auto = instant ? 0 : AUTO * (st.hover >= 0 ? SLOW : 1);
+        const paused =
+          document.documentElement.classList.contains("motion-paused");
+        const auto = instant || paused ? 0 : AUTO * (st.hover >= 0 ? SLOW : 1);
         st.vel += (auto - st.vel) * (1 - Math.exp(-dt * 4));
         st.pos += st.vel * dt;
       }

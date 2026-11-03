@@ -4,6 +4,7 @@ import Link from "next/link";
 import localFont from "next/font/local";
 import { site } from "@/lib/foto/catalog";
 import { FotoShell } from "@/components/foto/shell";
+import { PortfolioLink } from "@/components/foto/portfolio-link";
 import "./foto.css";
 
 const archivo = localFont({
@@ -53,11 +54,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Link href="/foto/" className="wordmark">
             <span className="aperture" aria-hidden="true" />
             {site.title}
-            <small className="mono">{site.name}</small>
+            <small className="mono">
+              <span className="brand-star" aria-hidden="true">
+                ✳
+              </span>{" "}
+              {site.name}
+            </small>
           </Link>
           <nav aria-label="Navigasi utama">
             <Link href="/foto/#rol">Lembar kontak</Link>
-            <Link href="/id/">Portofolio ↗</Link>
+            <PortfolioLink label={{ id: "Portofolio", en: "Portfolio" }} />
           </nav>
         </header>
         {children}
@@ -66,7 +72,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             © {new Date().getFullYear()} {site.name}
           </span>
           <span>Dibuat dengan Next.js dan GSAP</span>
-          <Link href="/id/">Kembali ke portofolio ↗</Link>
+          <PortfolioLink
+            label={{ id: "Kembali ke portofolio", en: "Back to the portfolio" }}
+          />
         </footer>
       </body>
     </html>
